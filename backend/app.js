@@ -1,8 +1,9 @@
 const express = require('express');
-const databaseConnection = require('./database/connection');
-
+const { load } = require('./models/Index');
 
 const app = express();
+
+load();
 
 app.use((req, res, next) => {
     console.log('Requête reçue !');
