@@ -1,7 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const database = require('../database/connection');
 
-module.exports = database.define("Post", {
-    title: {type: DataTypes.STRING(50)},
+module.exports = database.define("Comment", {
     content: {type: DataTypes.STRING(500)}
 });

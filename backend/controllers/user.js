@@ -1,4 +1,6 @@
 const { User } = require('../models/Index');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 exports.signup = (req, res, next) => {
     let strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
@@ -6,13 +8,13 @@ exports.signup = (req, res, next) => {
     if(strongRegex.test(password)){
         bcrypt.hash(req.body.password, 10)
         .then(hash => {
-            const user = await User.create ({
+            const user = User.create ({
                 firstName: req.body.firstName,
                 secondName: req.body.secondName,
                 email: req.body.email,
                 password: hash
             })
-            await User.save()
+            User.save()
             .then(() => res.status(201).json({ message: 'Utilisateur créé !'}))
             .catch(error => res.status(400).json({ error }));
         })

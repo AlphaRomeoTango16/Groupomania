@@ -1,9 +1,11 @@
 const express = require('express');
 const { load } = require('./models/Index');
+const helmet = require('helmet');
 
 /* Importationdes routers */
 const postRoutes = require('./routes/post');
 const userRoutes = require('./routes/user');
+const commentRoutes = require('./routes/comment');
 
 /* Connexion à la base de donnée */
 load();
@@ -21,5 +23,6 @@ app.use((req, res, next) => {
 
 app.use('/api/post', postRoutes);
 app.use('/api/auth', userRoutes);
+app.use('/api/auth', commentRoutes);
 
 module.exports = app;
