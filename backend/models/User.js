@@ -6,7 +6,7 @@ module.exports = database.define("User", {
         type: DataTypes.STRING(20),
         allowNull: false,
     },
-    secondName: {
+    lastName: {
         type: DataTypes.STRING(35),
         allowNull: false,
     },
