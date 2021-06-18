@@ -14,7 +14,6 @@
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
 }
 
@@ -23,6 +22,7 @@
   position: fixed;
   padding: 30px;
   bottom: 0;
+  text-align: center;
 
   a {
     font-weight: bold;

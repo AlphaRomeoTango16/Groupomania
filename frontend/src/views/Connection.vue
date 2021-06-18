@@ -23,21 +23,24 @@
           required
         ></b-form-input>
       </b-form-group>
-
-      <b-button type="submit" variant="primary">Connexion</b-button>
+      <div class="d-flex justify-content-center">
+        <b-button type="submit" variant="primary">Connexion</b-button>
+      </div>
     </b-form>
   </div>
 </template>
 
 <style lang="scss">
 .connection {
+    background-color: rgb(216, 216, 216);
+    margin-top: 50px;
     padding: 20px;
     width: 500px;
     margin-left: auto;
     margin-right: auto;
-    border-color: black;
-    border-width: 10px;
-} 
+    border-radius: 20px;
+    border: 1px solid darkgray;
+}
 
 </style>
 

@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.svg">
-    <span id="index">     
+    <img alt="Groupomania logo" src="../assets/logo.svg">
+    <span id="index">
       <router-link to="/Connection" id="connection">Connexion</router-link>/
       <router-link to="/Register" id="register">S'inscrire</router-link>
     </span>
@@ -15,6 +15,7 @@
   display: flex;
   margin-left: auto;
   margin-right: auto;
+  text-align: center;
 }
 
 #connection {
@@ -28,6 +29,8 @@
 
 .home img {
   width: 20%;
+  display: block;
+  margin: auto;
 }
 
 </style>

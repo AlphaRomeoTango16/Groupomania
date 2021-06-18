@@ -43,7 +43,7 @@
         ></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-4" label="Votre mot de passe" label-for="input-2">
+      <b-form-group id="input-group-4" label="Votre mot de passe" label-for="input-4">
         <b-form-input
           id="input-4"
           v-model="form.password"
@@ -52,19 +52,28 @@
         ></b-form-input>
       </b-form-group>
 
-      <b-button type="submit" variant="primary">S'inscrire</b-button>
+      <b-form-group id="input-group-5" label="Votre photo de profile" label-for="input-5">
+      <b-form-file v-model="file1" :state="Boolean(file1)" placeholder="Choississez une image ou glisser là ici" drop-placeholder="Glissez votre image ici">
+      </b-form-file>
+        <div class="mt-3">Image sélectionné : {{ file1 ? file1.name : '' }}</div>
+      </b-form-group>
+      <div class="d-flex justify-content-center">
+        <b-button type="submit" variant="primary">S'inscrire</b-button>
+      </div>
     </b-form>
   </div>
 </template>
 
 <style lang="scss">
 .register {
+    background-color: rgb(216, 216, 216);
+    margin-top: 50px;
     padding: 20px;
     width: 500px;
     margin-left: auto;
     margin-right: auto;
-    border-color: black;
-    border-width: 10px;
+    border-radius: 20px;
+    border: 1px solid darkgray;
 } 
 
 </style>

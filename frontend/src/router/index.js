@@ -34,7 +34,7 @@ const routes = [
   },
   {
     path: '/connected',
-    name: 'Connectec',
+    name: 'Connected',
     component: () => import('../views/Connected.vue')
   }
 ]
