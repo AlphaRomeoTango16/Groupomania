@@ -1,8 +1,8 @@
-const { Post, User } = require('../models/Index');
+const { Post, User, Comment } = require('../models/Index');
 
 exports.getAllPost = (req, res, next) => {
     Post.findAll({
-        include:User
+        include:User,
     })
     .then(listPost => res.status(200).json(listPost))
     .catch(error => res.status(400).json({ error }));
@@ -27,7 +27,7 @@ exports.createPost = (req, res, next) => {
 exports.modifyPost = (req, res, next) => {
     Post.findByPk(req.params.id)
     .then(post => {
-        if (req.token.userId == post.UserId) {
+        if (req.token.userId == post.UserId || req.token.userAdmin == true) {
             Post.update({
                 title: req.body.title,
                 content: req.body.content
@@ -40,7 +40,7 @@ exports.modifyPost = (req, res, next) => {
             .then(() => res.status(200).json({ message: 'Message modifié !'}))
             .catch(error => res.status(400).json({ error }));
         } else {
-            res.status(403).json({ message: "Vous n'avez pas l'autorisation de modifié ce post !" })
+            res.status(403).json({ message: "Vous n'avez pas l'autorisation pour modifié ce post !" })
         }
     })
     .catch(error => res.status(404).json({ error }));
@@ -58,7 +58,7 @@ exports.deletePost = (req, res, next) => {
             .then(() => res.status(200).json({ message: 'Message supprimé !'}))
             .catch(error => res.status(400).json({ error }));
         } else {
-            res.status(403).json({ message: "Vous n'avez pas l'autorisation de supprimé ce post !" })
+            res.status(403).json({ message: "Vous n'avez pas l'autorisation pour supprimé ce post !" })
         }
     })
     .catch(error => res.status(404).json({ error }));

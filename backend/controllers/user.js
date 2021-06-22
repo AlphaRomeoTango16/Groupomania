@@ -12,6 +12,7 @@ exports.signup = (req, res, next) => {
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 emailAddress: req.body.emailAddress,
+                admin: req.body.admin,
                 password: hash
             })
             .then(() => res.status(201).json({ message: 'Utilisateur créé !'}))
@@ -25,7 +26,7 @@ exports.signup = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-    User.findOne({ emailAddress: req.body.emailAddress })
+    User.findOne({ where : { emailAddress: req.body.emailAddress } })
         .then(user => {
             if (!user) {
                 return res.status(401).json({ error: 'Utilisateur non trouvé !'});
@@ -33,18 +34,36 @@ exports.login = (req, res, next) => {
             bcrypt.compare(req.body.password, user.password)
                 .then(valid => {
                     if (!valid) {
-                        return res.status(401).json({ error: 'Motde passe incorrect !'});
+                        return res.status(401).json({ error: 'Mot de passe incorrect !'});
                     }
                     res.status(200).json({
                         userId: user.isSoftDeleted,
                         token: jwt.sign(
-                            { userId: user.id },
+                            { userId: user.id, userAdmin: user.admin },
                             'RANDOM ACCESS TOKEN',
                             { expiresIn: '24h' }
                         )
                     });
                 })
                 .catch(error => res.status(500).json({ error }));
+        })
+        .catch(error => res.status(500).json({ error }));
+};
+
+exports.deleteUser = (req, res, next) => {
+    User.findOne({ where : { emailAddress: req.body.emailAddress } })
+        .then(user => {
+            if (req.token.userId == user.id) {
+                User.destroy({
+                    where: {
+                        emailAddress: req.body.emailAddress
+                    }
+                })
+                .then(() => res.status(200).json({ message: 'Compte supprimé !'}))
+                .catch(error => res.status(400).json({ error }));
+            } else {
+                res.status(403).json({ message: "Vous n'avez pas l'autorisation pour supprimer ce compte !" })
+            }
         })
         .catch(error => res.status(500).json({ error }));
 };

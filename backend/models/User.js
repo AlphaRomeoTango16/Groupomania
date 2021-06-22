@@ -13,10 +13,14 @@ module.exports = database.define("User", {
     emailAddress: {
         type: DataTypes.STRING(30),
         allowNull: false,
-        unique: true
+        unique: 'email'
     },
     password: {
         type: DataTypes.STRING(255),
         allowNull: false,
     },
+    admin: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+    }
 });
