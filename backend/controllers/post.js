@@ -27,7 +27,7 @@ exports.createPost = (req, res, next) => {
 exports.modifyPost = (req, res, next) => {
     Post.findByPk(req.params.id)
     .then(post => {
-        if (req.token.userId == post.userId) {
+        if (req.token.userId == post.UserId) {
             Post.update({
                 title: req.body.title,
                 content: req.body.content
@@ -47,11 +47,19 @@ exports.modifyPost = (req, res, next) => {
 }
 
 exports.deletePost = (req, res, next) => {
-    Post.destroy({
-        where: {
-            id: req.params.id
+    Post.findByPk(req.params.id)
+    .then( post => {
+        if (req.token.userId == post.UserId) {
+            Post.destroy({
+                where: {
+                    id: req.params.id
+                }
+            })
+            .then(() => res.status(200).json({ message: 'Message supprimé !'}))
+            .catch(error => res.status(400).json({ error }));
+        } else {
+            res.status(403).json({ message: "Vous n'avez pas l'autorisation de supprimé ce post !" })
         }
     })
-    .then(() => res.status(200).json({ message: 'Message supprimé !'}))
-    .catch(error => res.status(400).json({ error }));
+    .catch(error => res.status(404).json({ error }));
 }
