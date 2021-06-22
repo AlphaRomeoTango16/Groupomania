@@ -1,4 +1,5 @@
 require('dotenv').config;
+const nodemon = require('nodemon');
 const express = require('express');
 const { load } = require('./models/Index');
 const helmet = require('helmet');
@@ -22,8 +23,9 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(express.json());
 app.use('/api/post', postRoutes);
 app.use('/api/auth', userRoutes);
-app.use('/api/auth', commentRoutes);
+app.use('/api/comment', commentRoutes);
 
 module.exports = app;

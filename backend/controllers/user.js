@@ -11,7 +11,7 @@ exports.signup = (req, res, next) => {
             const user = User.create ({
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
-                email: req.body.email,
+                emailAddress: req.body.emailAddress,
                 password: hash
             })
             .then(() => res.status(201).json({ message: 'Utilisateur créé !'}))
@@ -25,7 +25,7 @@ exports.signup = (req, res, next) => {
 };
 
 exports.login = (req, res, next) => {
-    User.findOne({ email: req.body.email })
+    User.findOne({ emailAddress: req.body.emailAddress })
         .then(user => {
             if (!user) {
                 return res.status(401).json({ error: 'Utilisateur non trouvé !'});
