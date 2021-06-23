@@ -19,6 +19,9 @@ module.exports = database.define("User", {
         type: DataTypes.STRING(255),
         allowNull: false,
     },
+    imageUrl: {
+        type: DataTypes.STRING(500)
+    },
     admin: {
         type: DataTypes.BOOLEAN,
         allowNull: false,

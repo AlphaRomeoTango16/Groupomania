@@ -4,6 +4,7 @@ const Comment = require('./Comment');
 
 const load = async () => {
     Post.belongsTo(User);
+    Post.hasMany(Comment);
     Comment.belongsTo(User);
     Comment.belongsTo(Post);
 

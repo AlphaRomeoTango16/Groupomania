@@ -38,7 +38,7 @@ exports.modifyComment = (req, res, next) => {
 exports.deleteComment = (req, res, next) => {
     Comment.findByPk(req.params.id)
     .then(comment => {
-        if (req.token.userId == comment.UserId) {
+        if (req.token.userId == comment.UserId || req.token.userAdmin == true) {
             Comment.destroy({
                 where: {
                     id: req.params.id
