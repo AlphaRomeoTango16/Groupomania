@@ -13,7 +13,8 @@ exports.signup = (req, res, next) => {
                 lastName: req.body.lastName,
                 emailAddress: req.body.emailAddress,
                 admin: req.body.admin,
-                password: hash
+                password: hash,
+                imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
             })
             .then(() => res.status(201).json({ message: 'Utilisateur créé !'}))
             .catch(error => res.status(400).json({ error }));
@@ -54,13 +55,16 @@ exports.deleteUser = (req, res, next) => {
     User.findOne({ where : { emailAddress: req.body.emailAddress } })
         .then(user => {
             if (req.token.userId == user.id) {
-                User.destroy({
-                    where: {
-                        emailAddress: req.body.emailAddress
-                    }
+                const filename = post.imageUrl.split('/images/')[1];
+                fs.unlink(`images/${filename}`, () => {
+                    User.destroy({
+                        where: {
+                            emailAddress: req.body.emailAddress
+                        }
+                    })
+                    .then(() => res.status(200).json({ message: 'Compte supprimé !'}))
+                    .catch(error => res.status(400).json({ error }));  
                 })
-                .then(() => res.status(200).json({ message: 'Compte supprimé !'}))
-                .catch(error => res.status(400).json({ error }));
             } else {
                 res.status(403).json({ message: "Vous n'avez pas l'autorisation pour supprimer ce compte !" })
             }
