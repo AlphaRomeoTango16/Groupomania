@@ -1,6 +1,6 @@
 <template>
  <div class="register">
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+    <b-form @submit="onSubmit" v-if="show">
       <b-form-group
         id="input-group-1"
         label="Votre prénom"
@@ -79,36 +79,5 @@
 </style>
 
 <script>
-export default {
-    data() {
-      return {
-        form: {
-          firstname: '',
-          lastname: '',
-          email: '',
-          password: '',
-        },
-        show: true
-      }
-    },
-    methods: {
-      onSubmit(event) {
-        event.preventDefault()
-        alert(JSON.stringify(this.form))
-      },
-      onReset(event) {
-        event.preventDefault()
-        // Reset our form values
-        this.form.name = ''
-        this.form.name = ''
-        this.form.email = ''
-        this.form.password = ''
-        // Trick to reset/clear native browser form validation state
-        this.show = false
-        this.$nextTick(() => {
-          this.show = true
-        })
-      }
-    }
-  }
+
 </script>
