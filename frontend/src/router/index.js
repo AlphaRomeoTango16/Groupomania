@@ -33,9 +33,9 @@ const routes = [
     component: () => import('../views/Register.vue')
   },
   {
-    path: '/connected',
-    name: 'Connected',
-    component: () => import('../views/Connected.vue')
+    path: '/feed',
+    name: 'Feed',
+    component: () => import('../views/Feed.vue')
   }
 ]
 
