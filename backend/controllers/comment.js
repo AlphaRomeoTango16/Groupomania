@@ -20,15 +20,11 @@ exports.modifyComment = (req, res, next) => {
     Comment.findByPk(req.params.id)
     .then(comment => {
         if (req.token.userId == comment.UserId || req.token.userAdmin) {
-            Comment.update({
-                content: req.body.content,
-                imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-            },
-            {
-                where: {
-                    id: req.params.id
-                }
-            })
+            let commentObject = JSON.parse(req.body.comment);
+            if (req.file != undefined) {
+                commentObject.imageUrl=`${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+            }
+            Comment.update(commentObject,{where: {id: req.params.id}})
             .then(() => res.status(200).json({ message: 'Commentaire modifié !'}))
             .catch(error => res.status(400).json({ error }));
         } else {

@@ -35,7 +35,7 @@ exports.modifyPost = (req, res, next) => {
             if (req.file != undefined) {
                 postObject.imageUrl=`${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
             }
-            Post.update(postObject)
+            Post.update(postObject, {where: {id: req.params.id}})
             .then(() => res.status(200).json({ message: 'Message modifié !'}))
             .catch(error => res.status(400).json({ error }));
         } else {
