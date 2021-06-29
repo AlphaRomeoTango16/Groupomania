@@ -14,12 +14,14 @@ exports.signup = (req, res, next) => {
                 emailAddress: req.body.emailAddress,
                 admin: req.body.admin,
                 password: hash,
-                imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+                /**imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`**/
             })
             .then(() => res.status(201).json({ message: 'Utilisateur créé !'}))
             .catch(error => res.status(400).json({ error }));
         })
-        .catch(error => res.status(500).json({ error }));
+        .catch(error => 
+            res.status(500).json({ error })
+            );
     }
     else{
         res.send('Votre mot de passe doit contenir = une majuscule, une minuscule, un chiffre et un caractère spécial !');

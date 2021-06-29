@@ -16,12 +16,13 @@ exports.getOnePost = (req, res, next) => {
 }
 
 exports.createPost = (req, res, next) => {
-    Post.create({
-        title: req.body.title,
-        content: req.body.content,
-        UserId: req.token.userId,
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-    })
+    let post = JSON.parse(req.body.post);
+    post.UserId = req.token.userId;
+    if (req.file != undefined) {
+        post.imageUrl=`${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+    }
+
+    Post.create(post)
     .then(() => res.status(201).json({ message: 'Message publié !'}))
     .catch(error => res.status(400).json({ error }));
 }
@@ -29,7 +30,7 @@ exports.createPost = (req, res, next) => {
 exports.modifyPost = (req, res, next) => {
     Post.findByPk(req.params.id)
     .then(post => {
-        if (req.token.userId == post.UserId || req.token.userAdmin == true) {
+        if (req.token.userId == post.UserId || req.token.userAdmin) {
             Post.update({
                 title: req.body.title,
                 content: req.body.content,
@@ -52,7 +53,7 @@ exports.modifyPost = (req, res, next) => {
 exports.deletePost = (req, res, next) => {
     Post.findByPk(req.params.id)
     .then( post => {
-        if (req.token.userId == post.UserId || req.token.userAdmin == true) {
+        if (req.token.userId == post.UserId || req.token.userAdmin) {
             const filename = post.imageUrl.split('/images/')[1];
             fs.unlink(`images/${filename}`, () => {
                 Post.destroy({

@@ -6,6 +6,11 @@
       <router-link to="/Register" id="register">S'inscrire</router-link>
       <router-link to="/Feed" id="feed">Feed</router-link>
     </span>
+    <div id="nav">
+      <router-link to="/">Accueil</router-link> |
+      <router-link to="/about">À propos</router-link> |
+      <router-link to="/contact">Contacts</router-link>
+    </div>
   </div>
 </template>
 
@@ -32,6 +37,23 @@
   width: 20%;
   display: block;
   margin: auto;
+}
+
+#nav {
+  width: 100%;
+  position: fixed;
+  padding: 30px;
+  bottom: 0;
+  text-align: center;
+
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+
+    &.router-link-exact-active {
+      color: #fd2c02;
+    }
+  }
 }
 
 </style>

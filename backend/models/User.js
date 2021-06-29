@@ -25,5 +25,6 @@ module.exports = database.define("User", {
     admin: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
+        defaultValue: false
     }
 });

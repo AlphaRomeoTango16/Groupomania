@@ -1,6 +1,6 @@
 <template>
  <div class="register">
-    <b-form @submit="onSubmit" v-if="show">
+    <b-form @submit="onSubmit">
       <b-form-group
         id="input-group-1"
         label="Votre prénom"
@@ -8,7 +8,7 @@
       >
         <b-form-input
           id="input-1"
-          v-model="form.firstname"
+          v-model="form.firstName"
           type="name"
           placeholder="Entrer votre prénom"
           required
@@ -22,7 +22,7 @@
       >
         <b-form-input
           id="input-2"
-          v-model="form.lastname"
+          v-model="form.lastName"
           type="name"
           placeholder="Entrer votre nom de famille"
           required
@@ -36,7 +36,7 @@
       >
         <b-form-input
           id="input-3"
-          v-model="form.email"
+          v-model="form.emailAddress"
           type="email"
           placeholder="Entrer votre adresse e-mail"
           required
@@ -79,5 +79,40 @@
 </style>
 
 <script>
+export default {
+  data() {
+    return {
+      form: {
+        firstName: '',
+        lastName: '',
+        emailAddress: '',
+        password: '',
+      }
+    }
+  },
+  methods: {
+    onSubmit(event) {
+      event.preventDefault()
+
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      var form = JSON.stringify(this.form);
+
+      var requestOptions = {
+        method: 'POST',
+        headers: {"Content-Type": "application/json"},
+        body: form,
+        redirect: 'follow'
+      };
+
+      fetch("http://localhost:3000/api/auth/signup", requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
+          }
+
+  }
+}
 
 </script>

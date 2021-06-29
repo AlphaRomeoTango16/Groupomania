@@ -18,7 +18,7 @@ exports.createComment = (req, res, next) => {
 exports.modifyComment = (req, res, next) => {
     Comment.findByPk(req.params.id)
     .then(comment => {
-        if (req.token.userId == comment.UserId || User.admin == true) {
+        if (req.token.userId == comment.UserId || req.token.userAdmin) {
             Comment.update({
                 content: req.body.content,
                 imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
@@ -40,7 +40,7 @@ exports.modifyComment = (req, res, next) => {
 exports.deleteComment = (req, res, next) => {
     Comment.findByPk(req.params.id)
     .then(comment => {
-        if (req.token.userId == comment.UserId || req.token.userAdmin == true) {
+        if (req.token.userId == comment.UserId || req.token.userAdmin) {
             const filename = post.imageUrl.split('/images/')[1];
             fs.unlink(`images/${filename}`, () => {
                 Comment.destroy({
