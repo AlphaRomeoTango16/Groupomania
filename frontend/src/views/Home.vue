@@ -6,11 +6,6 @@
       <router-link to="/Register" id="register">S'inscrire</router-link>
       <router-link to="/Feed" id="feed">Feed</router-link>
     </span>
-    <div id="nav">
-      <router-link to="/">Accueil</router-link> |
-      <router-link to="/about">À propos</router-link> |
-      <router-link to="/contact">Contacts</router-link>
-    </div>
   </div>
 </template>
 

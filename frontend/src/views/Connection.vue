@@ -1,6 +1,6 @@
 <template>
  <div class="connection">
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+    <b-form @submit="onConnection" v-if="show">
       <b-form-group
         id="input-group-1"
         label="Votre adresse e-mail"
@@ -9,7 +9,7 @@
         <b-form-input
           id="input-1"
           v-model="form.email"
-          type="email"
+          type="emailAddress"
           placeholder="Entrer votre e-mail"
           required
         ></b-form-input>
@@ -49,28 +49,33 @@ export default {
     data() {
       return {
         form: {
-          email: '',
+          emailAddress: '',
           password: '',
         },
         show: true
       }
     },
     methods: {
-      onSubmit(event) {
+      onConnection(event) {
         event.preventDefault()
-        alert(JSON.stringify(this.form))
-      },
-      onReset(event) {
-        event.preventDefault()
-        // Reset our form values
-        this.form.email = ''
-        this.form.password = ''
-        // Trick to reset/clear native browser form validation state
-        this.show = false
-        this.$nextTick(() => {
-          this.show = true
-        })
-      }
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var user = JSON.stringify(this.form);
+
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: user,
+          redirect: 'follow'
+        };
+
+        fetch("http://localhost:3000/api/auth/login", requestOptions)
+          .then((response => response.text()))
+          .then(result => console.log(result))
+          .catch(error => console.log('error', error));
+              }
     }
   }
 </script>

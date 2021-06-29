@@ -8,7 +8,7 @@
       >
         <b-form-input
           id="input-1"
-          v-model="form.firstName"
+          v-model="formdata.firstName"
           type="name"
           placeholder="Entrer votre prénom"
           required
@@ -22,7 +22,7 @@
       >
         <b-form-input
           id="input-2"
-          v-model="form.lastName"
+          v-model="formdata.lastName"
           type="name"
           placeholder="Entrer votre nom de famille"
           required
@@ -36,7 +36,7 @@
       >
         <b-form-input
           id="input-3"
-          v-model="form.emailAddress"
+          v-model="formdata.emailAddress"
           type="email"
           placeholder="Entrer votre adresse e-mail"
           required
@@ -46,16 +46,16 @@
       <b-form-group id="input-group-4" label="Votre mot de passe" label-for="input-4">
         <b-form-input
           id="input-4"
-          v-model="form.password"
+          v-model="formdata.password"
           placeholder="Entrer votre mot de passe"
           required
         ></b-form-input>
       </b-form-group>
 
       <b-form-group id="input-group-5" label="Votre photo de profile" label-for="input-5">
-      <b-form-file v-model="file1" :state="Boolean(file1)" placeholder="Choississez une image ou glisser là ici" drop-placeholder="Glissez votre image ici">
+      <b-form-file id="image" v-model="formdata.fileInput" :state="Boolean(fileInput)" placeholder="Choississez une image ou glisser là ici" drop-placeholder="Glissez votre image ici">
       </b-form-file>
-        <div class="mt-3">Image sélectionné : {{ file1 ? file1.name : '' }}</div>
+        <div class="mt-3">Image sélectionné : {{ fileInput ? fileInput.name : '' }}</div>
       </b-form-group>
       <div class="d-flex justify-content-center">
         <b-button type="submit" variant="primary">S'inscrire</b-button>
@@ -82,27 +82,27 @@
 export default {
   data() {
     return {
-      form: {
+      formdata: {
         firstName: '',
         lastName: '',
         emailAddress: '',
-        password: '',
+        password: ''
       }
     }
   },
   methods: {
     onSubmit(event) {
       event.preventDefault()
+      
+      const fileInput = document.getElementById('image')
 
-      var myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-
-      var form = JSON.stringify(this.form);
+      var formdata = new FormData();
+      formdata.append("user", "{\"firstName\": \"\",\"lastName\": \"\",\"emailAddress\": \"\",\"password\": \"\",\"admin\"}");
+      formdata.append("image", fileInput.files[0], "");
 
       var requestOptions = {
         method: 'POST',
-        headers: {"Content-Type": "application/json"},
-        body: form,
+        body: formdata,
         redirect: 'follow'
       };
 
