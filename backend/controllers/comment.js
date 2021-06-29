@@ -1,14 +1,15 @@
 const { Post, User, Comment } = require('../models/Index');
+const fs = require('fs');
 
 exports.createComment = (req, res, next) => {
     Post.findByPk(req.params.id)
     .then(post => {
-        Comment.create({
-            content: req.body.content,
-            UserId: req.token.userId,
-            postId: req.params.id,
-            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-        })
+        let comment = JSON.parse(req.body.comment);
+        comment.UserId = req.token.userId;
+        if (req.file != undefined) {
+            comment.imageUrl= `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+        }
+        Comment.create(comment)
         .then(() => res.status(201).json({ message: 'Commentaire publié !'}))
         .catch(error => res.status(400).json({ error }));
     })
@@ -41,7 +42,7 @@ exports.deleteComment = (req, res, next) => {
     Comment.findByPk(req.params.id)
     .then(comment => {
         if (req.token.userId == comment.UserId || req.token.userAdmin) {
-            const filename = post.imageUrl.split('/images/')[1];
+            const filename = comment.imageUrl.split('/images/')[1];
             fs.unlink(`images/${filename}`, () => {
                 Comment.destroy({
                     where: {

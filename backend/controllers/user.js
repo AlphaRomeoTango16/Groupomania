@@ -1,21 +1,20 @@
 const { User } = require('../models/Index');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
 
 exports.signup = (req, res, next) => {
     let strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
-    let password = req.body.password;
+    const userObject = JSON.parse(req.body.user);
+    let password = userObject.password;
     if(strongRegex.test(password)){
-        bcrypt.hash(req.body.password, 10)
+        bcrypt.hash(password, 10)
         .then(hash => {
-            const user = User.create ({
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
-                emailAddress: req.body.emailAddress,
-                admin: req.body.admin,
-                password: hash,
-                /**imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`**/
-            })
+            if (req.file != undefined) {
+                userObject.imageUrl=`${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+            }
+            userObject.password =  hash;
+            User.create(userObject)
             .then(() => res.status(201).json({ message: 'Utilisateur créé !'}))
             .catch(error => res.status(400).json({ error }));
         })
@@ -56,8 +55,8 @@ exports.login = (req, res, next) => {
 exports.deleteUser = (req, res, next) => {
     User.findOne({ where : { emailAddress: req.body.emailAddress } })
         .then(user => {
-            if (req.token.userId == user.id) {
-                const filename = post.imageUrl.split('/images/')[1];
+            if (req.token.userId == user.id || req.token.userAdmin) {
+                const filename = user.imageUrl.split('/images/')[1];
                 fs.unlink(`images/${filename}`, () => {
                     User.destroy({
                         where: {
