@@ -8,12 +8,10 @@
     class="mb-2"
   >
     <span id="header">
-      <b-card-title>Title</b-card-title>
+      <b-card-title v-bind:title="post.title"></b-card-title>
       <b-avatar src="https://placekitten.com/300/300"></b-avatar>
     </span>
-    <b-card-text>
-      Some quick example text to build on the card title and make up the bulk of the card's content.
-    </b-card-text>
+    <b-card-text v-bind:content="post.content"></b-card-text>
   </b-card>
 </div>
 </template>
@@ -29,7 +27,10 @@
 
 <script>
 export default {
-  name: 'Post'
+  name: 'Post',
+  methods: {
+
+  }
 }
 
 </script>

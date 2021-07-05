@@ -1,14 +1,15 @@
 <template>
  <div class="register">
-    <b-form @submit="onSubmit">
+    <b-form id="form" @submit="onSubmit">
       <b-form-group
         id="input-group-1"
         label="Votre prénom"
-        label-for="input-1"
+        label-for="firstName"
       >
         <b-form-input
-          id="input-1"
-          v-model="formdata.firstName"
+          id="firstName"
+          name="firstName"
+          v-model="form.firstName"
           type="name"
           placeholder="Entrer votre prénom"
           required
@@ -18,11 +19,12 @@
       <b-form-group
         id="input-group-2"
         label="Votre nom"
-        label-for="input-2"
+        label-for="lastName"
       >
         <b-form-input
-          id="input-2"
-          v-model="formdata.lastName"
+          id="lastName"
+          name="lastName"
+          v-model="form.lastName"
           type="name"
           placeholder="Entrer votre nom de famille"
           required
@@ -32,30 +34,31 @@
       <b-form-group
         id="input-group-3"
         label="Votre adresse e-mail"
-        label-for="input-3"
+        label-for="emailAddress"
       >
         <b-form-input
-          id="input-3"
-          v-model="formdata.emailAddress"
+          id="emailAddress"
+          name="emailAddress"
+          v-model="form.emailAddress"
           type="email"
           placeholder="Entrer votre adresse e-mail"
           required
         ></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-4" label="Votre mot de passe" label-for="input-4">
+      <b-form-group id="input-group-4" label="Votre mot de passe" label-for="password">
         <b-form-input
-          id="input-4"
-          v-model="formdata.password"
+          id="password"
+          name="password"
+          v-model="form.password"
           placeholder="Entrer votre mot de passe"
           required
         ></b-form-input>
       </b-form-group>
 
-      <b-form-group id="input-group-5" label="Votre photo de profile" label-for="input-5">
-      <b-form-file id="image" v-model="formdata.fileInput" :state="Boolean(fileInput)" placeholder="Choississez une image ou glisser là ici" drop-placeholder="Glissez votre image ici">
+      <b-form-group id="input-group-5" label="Votre photo de profile" label-for="image">
+      <b-form-file id="image" name="image" v-model="form.fileInput" :state="Boolean(fileInput)" placeholder="Choississez une image ou glisser là ici" drop-placeholder="Glissez votre image ici">
       </b-form-file>
-        <div class="mt-3">Image sélectionné : {{ fileInput ? fileInput.name : '' }}</div>
       </b-form-group>
       <div class="d-flex justify-content-center">
         <b-button type="submit" variant="primary">S'inscrire</b-button>
@@ -82,36 +85,46 @@
 export default {
   data() {
     return {
-      formdata: {
-        firstName: '',
-        lastName: '',
-        emailAddress: '',
-        password: ''
+      form: {
+        user: {
+          firstName: '',
+          lastName: '',
+          emailAddress: '',
+          password: ''
+        },
+        image: {
+          fileInput: ''
+        }
       }
     }
   },
   methods: {
     onSubmit(event) {
       event.preventDefault()
-      
-      const fileInput = document.getElementById('image')
+      console.log(event.target.firstName.value);
 
-      var formdata = new FormData();
-      formdata.append("user", "{\"firstName\": \"\",\"lastName\": \"\",\"emailAddress\": \"\",\"password\": \"\",\"admin\"}");
-      formdata.append("image", fileInput.files[0], "");
+      const data = {
+        firstName: event.target.firstName.value,
+        lastName: event.target.lastName.value,
+        emailAddress: event.target.emailAddress.value,
+        password: event.target.password.value,
+      }
 
-      var requestOptions = {
+      let formData = new FormData();
+      formData.append("user", JSON.stringify(data));
+      formData.append("image", event.target.image.files[0], event.target.image.files[0].name);
+
+      let requestOptions = {
         method: 'POST',
-        body: formdata,
+        body: formData,
         redirect: 'follow'
       };
 
       fetch("http://localhost:3000/api/auth/signup", requestOptions)
         .then(response => response.text())
-        .then(result => console.log(result))
+        .then(() => {window.location.href="Feed.vue"})
         .catch(error => console.log('error', error));
           }
-
   }
 }
 

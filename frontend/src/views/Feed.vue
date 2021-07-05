@@ -1,17 +1,17 @@
 <template>
 <div id="feed_page">
   <div id="navbar">
-    <b-navbar toggleable="md" type="dark" variant="dark">
+    <b-navbar toggleable="md" type="dark" variant="dark" fixed="top">
       <b-navbar-brand to="/"><img id="logo" alt="Groupomania logo" src="../assets/white_logo.svg"></b-navbar-brand>
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav class="ml-auto">
           <b-nav-item-dropdown right>
-          <template #button-content>
-            <b-avatar src="https://placekitten.com/300/300"></b-avatar>
-            <em>User</em>
+          <template #button-content id="profile">
+            <em>Profile</em>
           </template>
-          <b-dropdown-item href="#">Profile</b-dropdown-item>
+          <b-dropdown-item href="#">Créer un post</b-dropdown-item>
+          <b-dropdown-item href="#">Éditer profile</b-dropdown-item>
           <b-dropdown-item @click.prevent="logout">Déconnexion</b-dropdown-item>
         </b-nav-item-dropdown>
         </b-navbar-nav>
@@ -33,7 +33,7 @@
 #feed_list {
   display: flex;
   justify-content: center;
-  margin-top: 5%;
+  margin-top: 15%;
   margin-left: 20%;
   margin-right: 20%;
 }
@@ -47,6 +47,11 @@ export default {
 	name: 'Feed',
 	components: {
 		Post
-	}
+	},
+  methods: {
+
+  }
 }
+
+
 </script>
