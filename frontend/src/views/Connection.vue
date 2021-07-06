@@ -7,9 +7,9 @@
         label-for="input-1"
       >
         <b-form-input
-          id="input-1"
+          id="emailAddress"
           v-model="form.email"
-          type="emailAddress"
+          type="email"
           placeholder="Entrer votre e-mail"
           required
         ></b-form-input>
@@ -17,8 +17,9 @@
 
       <b-form-group id="input-group-2" label="Votre mot de passe" label-for="input-2">
         <b-form-input
-          id="input-2"
+          id="password"
           v-model="form.password"
+          type="password"
           placeholder="Entrer votre mot de passe"
           required
         ></b-form-input>
@@ -62,18 +63,22 @@ export default {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
-        var user = JSON.stringify(this.form);
+        const data = {
+          emailAddress: document.getElementById("emailAddress").value,
+          password: document.getElementById("password").value
+      }
 
         var requestOptions = {
           method: 'POST',
           headers: myHeaders,
-          body: user,
+          body: JSON.stringify(data),
           redirect: 'follow'
         };
 
         fetch("http://localhost:3000/api/auth/login", requestOptions)
-          .then((response => response.text()))
-          .then(result => console.log(result))
+          .then((response => response.json()))
+          .then(result => {localStorage.setItem("user", JSON.stringify(result))})
+          .then(() => {this.$router.push('/feed')})
           .catch(error => console.log('error', error));
               }
     }

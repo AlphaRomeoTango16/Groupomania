@@ -39,7 +39,8 @@ exports.login = (req, res, next) => {
                         return res.status(401).json({ error: 'Mot de passe incorrect !'});
                     }
                     res.status(200).json({
-                        userId: user.isSoftDeleted,
+                        userId: user.id,
+                        admin: user.admin,
                         token: jwt.sign(
                             { userId: user.id, userAdmin: user.admin },
                             'RANDOM ACCESS TOKEN',

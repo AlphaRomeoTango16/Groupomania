@@ -1,6 +1,6 @@
 <template>
  <div class="register">
-    <b-form id="form" @submit="onSubmit">
+    <b-form @submit="onSubmit">
       <b-form-group
         id="input-group-1"
         label="Votre prénom"
@@ -50,6 +50,7 @@
         <b-form-input
           id="password"
           name="password"
+          type="password"
           v-model="form.password"
           placeholder="Entrer votre mot de passe"
           required
@@ -57,7 +58,7 @@
       </b-form-group>
 
       <b-form-group id="input-group-5" label="Votre photo de profile" label-for="image">
-      <b-form-file id="image" name="image" v-model="form.fileInput" :state="Boolean(fileInput)" placeholder="Choississez une image ou glisser là ici" drop-placeholder="Glissez votre image ici">
+      <b-form-file id="image" type="file" name="image" v-model="form.fileInput" :state="Boolean(fileInput)" placeholder="Choississez une image ou glisser là ici" drop-placeholder="Glissez votre image ici">
       </b-form-file>
       </b-form-group>
       <div class="d-flex justify-content-center">
@@ -101,18 +102,17 @@ export default {
   methods: {
     onSubmit(event) {
       event.preventDefault()
-      console.log(event.target.firstName.value);
 
       const data = {
-        firstName: event.target.firstName.value,
-        lastName: event.target.lastName.value,
-        emailAddress: event.target.emailAddress.value,
-        password: event.target.password.value,
+        firstName: document.getElementById("firstName").value,
+        lastName: document.getElementById("lastName").value,
+        emailAddress: document.getElementById("emailAddress").value,
+        password: document.getElementById("password").value,
       }
 
       let formData = new FormData();
       formData.append("user", JSON.stringify(data));
-      formData.append("image", event.target.image.files[0], event.target.image.files[0].name);
+      formData.append("image", document.getElementById("image").files[0]);
 
       let requestOptions = {
         method: 'POST',
@@ -122,7 +122,7 @@ export default {
 
       fetch("http://localhost:3000/api/auth/signup", requestOptions)
         .then(response => response.text())
-        .then(() => {window.location.href="Feed.vue"})
+        .then(() => {this.$router.push('/connection')})
         .catch(error => console.log('error', error));
           }
   }

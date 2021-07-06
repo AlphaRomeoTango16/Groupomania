@@ -10,8 +10,8 @@
           <template #button-content id="profile">
             <em>Profile</em>
           </template>
-          <b-dropdown-item href="#">Créer un post</b-dropdown-item>
-          <b-dropdown-item href="#">Éditer profile</b-dropdown-item>
+          <b-dropdown-item @click="createPost">Créer un post</b-dropdown-item>
+          <b-dropdown-item @click="editProfile">Modifier profile</b-dropdown-item>
           <b-dropdown-item @click.prevent="logout">Déconnexion</b-dropdown-item>
         </b-nav-item-dropdown>
         </b-navbar-nav>
@@ -49,7 +49,10 @@ export default {
 		Post
 	},
   methods: {
-
+    createPost(event) {
+      event.preventDefault()
+      this.$router.push('/createPost')
+    }
   }
 }
 
