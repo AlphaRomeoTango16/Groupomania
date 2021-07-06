@@ -22,9 +22,12 @@
     <Post
     v-for="post in posts"
     :key="post.id"
-    v-bind:url="post.image"
+    v-bind:imageUrl="post.imageUrl"
     v-bind:title="post.title"
     v-bind:content="post.content"
+    v-bind:firstName="post.User.firstName"
+    v-bind:lastName="post.User.lastName"
+    v-bind:imageUser="post.User.imageUrl"
     ></Post>
   </div>
 </div>
@@ -63,7 +66,8 @@ export default {
 	},
   data() {
     return {
-      posts: []
+      posts: [],
+      userAuth: false
     }
   },
   mounted: function() {
@@ -84,6 +88,15 @@ export default {
     createPost(event) {
       event.preventDefault()
       this.$router.push('/createPost')
+    },
+    editProfile() {
+      let post = this.posts;
+      let user = JSON.parse(localStorage.getItem("user"));
+      let id = user.userId;
+      let admin = user.admin;
+      if (id == post.UserId || admin == true){
+        this.userAuth = true
+      }
     }
   }
 }

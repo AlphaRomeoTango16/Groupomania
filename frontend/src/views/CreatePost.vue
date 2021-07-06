@@ -2,6 +2,7 @@
  <div class="createPost">
     <b-form @submit="sendPost">
     <div>
+        <h1>Créer votre post</h1>
         <b-form-textarea
         id="title"
         v-model="form.title"

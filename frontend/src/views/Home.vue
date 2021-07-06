@@ -4,7 +4,6 @@
     <span id="index">
       <router-link to="/Connection" id="connection">Connexion</router-link> /
       <router-link to="/Register" id="register">S'inscrire</router-link>
-      <router-link to="/Feed" id="feed">Feed</router-link>
     </span>
   </div>
 </template>

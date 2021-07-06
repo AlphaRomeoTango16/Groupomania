@@ -1,17 +1,23 @@
 <template>
 <div id="post">
-  <b-card
-    img-src="image"
-    img-alt="title"
-    img-bottom
-    tag="article"
-    class="mb-2"
-  >
-    <span id="header">
+  <b-card>
+    <div id="header">
+      <span id="avatar">
+        <b-avatar :src="imageUser"></b-avatar>
+        <p>{{ firstName }} {{ lastName }}</p>
+      </span>
+      <span id="buttons" v-show="userAuth">
+        <b-button-group class="mx-1">
+        <b-button class="btn btn-warning">Modifier</b-button>
+        <b-button class="btn btn-danger">Supprimer</b-button>
+      </b-button-group>
+      </span>
+    </div>
+    <div id="body">
       <b-card-title>{{ title }}</b-card-title>
-      <b-avatar> {{ image }} </b-avatar>
-    </span>
-    <b-card-text> {{ content }} </b-card-text>
+      <b-card-text> {{ content }} </b-card-text>
+      <img id="image" :src="imageUrl"/>
+    </div>
   </b-card>
 </div>
 </template>
@@ -24,7 +30,27 @@
 #header {
   display: flex;
   justify-content: space-between;
-  padding-bottom: 2%;
+  align-items: center;
+}
+
+#avatar {
+  display: flex;
+  align-items: center;
+}
+
+#avatar p {
+  width: 200px;
+  margin-left: 5%;
+  margin-bottom: 0;
+}
+
+#body {
+  margin-top: 3%;
+}
+
+#image {
+  width: 100%;
+  object-fit: contain;
 }
 
 </style>
@@ -32,22 +58,27 @@
 <script>
 export default {
   props: {
-    url: {
-      type: String
-    },
     title: {
       type: String
     },
-    image: {
+    firstName: {
+      type: String
+    },
+    lastName: {
+      type: String
+    },
+    imageUrl: {
       type: String
     },
     content: {
+      type: String
+    },
+    imageUser: {
       type: String
     }
   },
   name: 'Post',
   methods: {
-
   }
 }
 
