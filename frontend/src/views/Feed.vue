@@ -19,7 +19,13 @@
     </b-navbar>
   </div>
   <div id="feed_list">
-    <Post />
+    <Post
+    v-for="post in posts"
+    :key="post.id"
+    v-bind:url="post.image"
+    v-bind:title="post.title"
+    v-bind:content="post.content"
+    ></Post>
   </div>
 </div>
 </template>
@@ -30,9 +36,16 @@
   width: 30%;
 }
 
+#feed_page {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 #feed_list {
-  display: flex;
-  justify-content: center;
+  height: 90%;
+  flex-direction: row;
   margin-top: 15%;
   margin-left: 20%;
   margin-right: 20%;
@@ -48,7 +61,26 @@ export default {
 	components: {
 		Post
 	},
+  data() {
+    return {
+      posts: []
+    }
+  },
+  mounted: function() {
+      this.loadPost()
+  },
   methods: {
+    loadPost() {
+      var requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+      };
+
+      fetch("http://localhost:3000/api/post/", requestOptions)
+        .then(response => response.json())
+        .then(result => {this.posts = result})
+        .catch(error => console.log('error', error));
+    },
     createPost(event) {
       event.preventDefault()
       this.$router.push('/createPost')

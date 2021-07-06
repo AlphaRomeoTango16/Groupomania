@@ -1,22 +1,26 @@
 <template>
 <div id="post">
   <b-card
-    img-src="https://picsum.photos/600/300/?image=25"
-    img-alt="Image"
+    img-src="image"
+    img-alt="title"
     img-bottom
     tag="article"
     class="mb-2"
   >
     <span id="header">
-      <b-card-title v-bind:title="post.title"></b-card-title>
-      <b-avatar src="https://placekitten.com/300/300"></b-avatar>
+      <b-card-title>{{ title }}</b-card-title>
+      <b-avatar> {{ image }} </b-avatar>
     </span>
-    <b-card-text v-bind:content="post.content"></b-card-text>
+    <b-card-text> {{ content }} </b-card-text>
   </b-card>
 </div>
 </template>
 
 <style lang="scss">
+#post {
+  margin-bottom: 5%;
+}
+
 #header {
   display: flex;
   justify-content: space-between;
@@ -27,6 +31,20 @@
 
 <script>
 export default {
+  props: {
+    url: {
+      type: String
+    },
+    title: {
+      type: String
+    },
+    image: {
+      type: String
+    },
+    content: {
+      type: String
+    }
+  },
   name: 'Post',
   methods: {
 
