@@ -29,6 +29,16 @@
     v-bind:lastName="post.User.lastName"
     v-bind:imageUser="post.User.imageUrl"
     ></Post>
+    <Comment
+    v-for="comment in comments"
+    :key="comment.id"
+    v-bind:imageUrl="comment.imageUrl"
+    v-bind:title="comment.title"
+    v-bind:content="comment.content"
+    v-bind:firstName="comment.User.firstName"
+    v-bind:lastName="comment.User.lastName"
+    v-bind:imageUser="comment.User.imageUrl"
+    ></Comment>
   </div>
 </div>
 </template>
@@ -67,11 +77,13 @@ export default {
   data() {
     return {
       posts: [],
-      userAuth: false
+      userAuth: false,
+      comments: []
     }
   },
   mounted: function() {
       this.loadPost()
+      this.loadComment()
   },
   methods: {
     loadPost() {
@@ -97,7 +109,7 @@ export default {
       if (id == post.UserId || admin == true){
         this.userAuth = true
       }
-    }
+    },
   }
 }
 
