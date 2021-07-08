@@ -21,7 +21,7 @@
   <div id="feed_list">
     <Post
     v-for="post in posts"
-    :key="post.id"
+    :key="post"
     v-bind:postId="post.id"
     v-bind:postUserId="post.UserId"
     v-bind:imageUrl="post.imageUrl"
@@ -30,7 +30,10 @@
     v-bind:firstName="post.User.firstName"
     v-bind:lastName="post.User.lastName"
     v-bind:imageUser="post.User.imageUrl"
+    v-bind:comments="post.comments"
     ></Post>
+    <Comment
+    ></Comment>
   </div>
 </div>
 </template>
@@ -60,15 +63,18 @@
 
 <script>
 import Post from '../components/Post.vue'
+import Comment from '../components/Comment.vue'
 
 export default {
 	name: 'Feed',
 	components: {
-		Post
+		Post,
+    Comment
 	},
   data() {
     return {
       posts: [],
+      comments: []
     }
   },
   mounted: function() {
