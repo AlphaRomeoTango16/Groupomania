@@ -22,6 +22,8 @@
     <Post
     v-for="post in posts"
     :key="post.id"
+    v-bind:postId="post.id"
+    v-bind:postUserId="post.UserId"
     v-bind:imageUrl="post.imageUrl"
     v-bind:title="post.title"
     v-bind:content="post.content"
@@ -29,16 +31,6 @@
     v-bind:lastName="post.User.lastName"
     v-bind:imageUser="post.User.imageUrl"
     ></Post>
-    <Comment
-    v-for="comment in comments"
-    :key="comment.id"
-    v-bind:imageUrl="comment.imageUrl"
-    v-bind:title="comment.title"
-    v-bind:content="comment.content"
-    v-bind:firstName="comment.User.firstName"
-    v-bind:lastName="comment.User.lastName"
-    v-bind:imageUser="comment.User.imageUrl"
-    ></Comment>
   </div>
 </div>
 </template>
@@ -60,8 +52,8 @@
   height: 90%;
   flex-direction: row;
   margin-top: 15%;
-  margin-left: 20%;
-  margin-right: 20%;
+  margin-left: 15%;
+  margin-right: 15%;
 }
 
 </style>
@@ -77,13 +69,10 @@ export default {
   data() {
     return {
       posts: [],
-      userAuth: false,
-      comments: []
     }
   },
   mounted: function() {
       this.loadPost()
-      this.loadComment()
   },
   methods: {
     loadPost() {
@@ -99,17 +88,13 @@ export default {
     },
     createPost(event) {
       event.preventDefault()
-      this.$router.push('/createPost')
+      this.$router.push('/createPost');
     },
-    editProfile() {
-      let post = this.posts;
-      let user = JSON.parse(localStorage.getItem("user"));
-      let id = user.userId;
-      let admin = user.admin;
-      if (id == post.UserId || admin == true){
-        this.userAuth = true
-      }
-    },
+    logout(event) {
+      event.preventDefault()
+      localStorage.clear()
+      this.$router.push('/Connection');
+    }
   }
 }
 

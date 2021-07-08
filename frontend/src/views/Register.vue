@@ -1,6 +1,7 @@
 <template>
  <div class="register">
     <b-form @submit="onSubmit">
+      <h1>Créer votre compte</h1>
       <b-form-group
         id="input-group-1"
         label="Votre prénom"

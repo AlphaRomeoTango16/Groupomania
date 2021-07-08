@@ -3,7 +3,7 @@ const fs = require('fs');
 
 exports.getAllPost = (req, res, next) => {
     Post.findAll({
-        include:User
+        include: [User, Comment]
     })
     .then(listPost => res.status(200).json(listPost))
     .catch(error => res.status(400).json({ error }));

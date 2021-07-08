@@ -14,7 +14,6 @@
       </span>
     </div>
     <div id="body">
-      <b-card-title>{{ title }}</b-card-title>
       <b-card-text> {{ content }} </b-card-text>
       <img id="image" :src="imageUrl"/>
     </div>
@@ -23,8 +22,12 @@
 </template>
 
 <style lang="scss">
-#post {
+#comment {
   margin-bottom: 5%;
+}
+
+#comment .card-body {
+  background-color: #e8e8e8;
 }
 
 #header {
@@ -58,9 +61,6 @@
 <script>
 export default {
   props: {
-    title: {
-      type: String
-    },
     firstName: {
       type: String
     },

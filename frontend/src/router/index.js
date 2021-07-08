@@ -29,7 +29,17 @@ const routes = [
     path: '/createPost',
     name: 'CreatePost',
     component: () => import('../views/CreatePost.vue')
-  }
+  },
+  {
+    path: '/editPost',
+    name: 'EditPost',
+    component: () => import('../views/EditPost.vue')
+  },
+  {
+    path: '/createComment',
+    name: 'CreateComment',
+    component: () => import('../views/CreateComment.vue')
+  },
 ]
 
 const router = new VueRouter({

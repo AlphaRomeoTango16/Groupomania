@@ -1,6 +1,7 @@
 <template>
  <div class="connection">
     <b-form @submit="onConnection" v-if="show">
+      <h1>Se connecter</h1>
       <b-form-group
         id="input-group-1"
         label="Votre adresse e-mail"

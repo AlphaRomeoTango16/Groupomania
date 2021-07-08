@@ -4,12 +4,13 @@ const fs = require('fs');
 exports.createComment = (req, res, next) => {
     Post.findByPk(req.params.id)
     .then(post => {
-        let comment = JSON.parse(req.body.comment);
-        comment.UserId = req.token.userId;
+        let commentObject = JSON.parse(req.body.comment);
+        commentObject.UserId = req.token.userId;
+        commentObject.PostId = req.params.id;
         if (req.file != undefined) {
-            comment.imageUrl= `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+            commentObject.imageUrl= `${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
         }
-        Comment.create(comment)
+        Comment.create(commentObject)
         .then(() => res.status(201).json({ message: 'Commentaire publié !'}))
         .catch(error => res.status(400).json({ error }));
     })
