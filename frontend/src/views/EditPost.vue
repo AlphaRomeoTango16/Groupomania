@@ -1,6 +1,6 @@
 <template>
  <div class="createPost">
-    <b-form @submit="sendPost">
+    <b-form @submit="modifyPost(postId)">
     <div>
         <h1>Modifier votre post</h1>
         <b-form-textarea
@@ -70,8 +70,66 @@ export default {
         }
       }
     },
+    mounted: function() {
+      this.loadThisPost()
+    },
     methods: {
-      sendPost() {
+      loadThisPost(postId) {
+
+        let user = JSON.parse(localStorage.getItem("user"));
+        let token = user.token;
+        let bearerToken = "Bearer" + ' ' + token;
+        postId = this.$route.query.postId;
+
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", bearerToken);
+
+        var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      let url = "http://localhost:3000/api/post/" + postId;
+
+      fetch(url, requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
+      },
+      modifyPost(postId) {
+
+        let user = JSON.parse(localStorage.getItem("user"));
+        let token = user.token;
+        let bearerToken = "Bearer" + ' ' + token;
+        postId = this.$route.query.postId;
+
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", bearerToken);
+
+        const data = {
+          title: document.getElementById("title").value,
+          content: document.getElementById("content").value
+        }
+
+        let formData = new FormData();
+        formData.append("post", JSON.stringify(data));
+        formData.append("image", document.getElementById("image").files[0]);  
+
+        var requestOptions = {
+          method: 'PUT',
+          headers: myHeaders,
+          body: formData,
+          redirect: 'follow'
+        };
+
+        let url = "http://localhost:3000/api/post/" + postId;
+
+        fetch(url, requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .then(() => {this.$router.push('/feed')})
+            .catch(error => console.log('error', error));
         }
     }
   }

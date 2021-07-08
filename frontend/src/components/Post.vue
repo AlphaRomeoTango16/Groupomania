@@ -121,7 +121,7 @@ export default {
   data() {
     return {
       Comments: [],
-      userAuth: false,
+      userAuth: true,
     }
   },
   mounted: function() {
@@ -138,29 +138,12 @@ export default {
       }
     },
     editPost(postId) {
-
-      let user = JSON.parse(localStorage.getItem("user"));
-      let token = user.token;
-      let bearerToken = "Bearer" + ' ' + token;
-
-      var myHeaders = new Headers();
-      myHeaders.append("Authorization", bearerToken);
-
-      var requestOptions = {
-        method: 'GET',
-        headers: myHeaders,
-        redirect: 'follow'
-      };
-
-      let url = "http://localhost:3000/api/post/" + postId;
-
-      fetch(url, requestOptions)
-        .then(response => response.text())
-        .then(result => console.log(result))
-        .then(() => {this.$router.push('/EditPost')})
-        .catch(error => console.log('error', error));
-
+      this.$router.push({
+        path: '/EditPost',
+        query: { postId }
+      })
     },
+
     deletePost(postId) {
 
       let user = JSON.parse(localStorage.getItem("user"));
@@ -184,7 +167,7 @@ export default {
       fetch(url, requestOptions)
         .then(response => response.text())
         .then(result => console.log(result))
-        .then(location => location.reload())
+        .then(() => { this.$router.go()})
         .catch(error => console.log('error', error));
     },
     addComment(event) {

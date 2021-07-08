@@ -78,10 +78,10 @@ export default {
     }
   },
   mounted: function() {
-      this.loadPost()
+      this.loadPosts()
   },
   methods: {
-    loadPost() {
+    loadPosts() {
       var requestOptions = {
         method: 'GET',
         redirect: 'follow'
