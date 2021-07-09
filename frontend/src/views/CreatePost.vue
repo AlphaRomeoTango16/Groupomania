@@ -6,7 +6,7 @@
         <b-form-textarea
         id="title"
         v-model="form.title"
-        placeholder="Écrivez votre titre"
+        placeholder="{title}"
         rows="1"
         max-rows="1"
         ></b-form-textarea>

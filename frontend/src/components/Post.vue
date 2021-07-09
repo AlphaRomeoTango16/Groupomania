@@ -8,14 +8,14 @@
       </span>
       <span id="buttons" v-show="userAuth">
         <b-button-group class="mx-1">
-        <b-button class="btn btn-warning" @click="editPost(postId)">Modifier</b-button>
+        <b-button class="btn btn-warning" @click="editPost(postId, title, content, imageUrl)">Modifier</b-button>
         <b-button class="btn btn-danger" @click="deletePost(postId)">Supprimer</b-button>
       </b-button-group>
       </span>
     </div>
     <div id="body">
       <b-card-title>{{ title }}</b-card-title>
-      <b-card-text> {{ content }}</b-card-text>
+      <b-card-text>{{ contentComment }}</b-card-text>
       <img id="image" :src="imageUrl"/>
     </div>
     <div id="footer">
@@ -25,7 +25,10 @@
   <Comment
   v-for="comment in comments"
   :key="comment"
+  v-bind:firstName="comment.firstName"
+  v-bind:lastName="comment.lastName"
   v-bind:content="comment.content"
+  v-bind:imageUser="post.User.imageUrl"
   ></Comment>
 </div>
 </template>
@@ -115,6 +118,9 @@ export default {
     },
     postUserId: {
       type: Number
+    },
+    comments : {
+      type: Array
     }
   },
   name: 'Post',
@@ -137,10 +143,10 @@ export default {
         this.userAuth = true
       }
     },
-    editPost(postId) {
+    editPost(postId, title, content, imageUrl) {
       this.$router.push({
         path: '/EditPost',
-        query: { postId }
+        query: { postId, title, content, imageUrl }
       })
     },
 

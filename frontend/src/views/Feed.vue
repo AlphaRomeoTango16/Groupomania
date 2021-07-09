@@ -30,10 +30,9 @@
     v-bind:firstName="post.User.firstName"
     v-bind:lastName="post.User.lastName"
     v-bind:imageUser="post.User.imageUrl"
-    v-bind:comments="post.comments"
-    ></Post>
-    <Comment
-    ></Comment>
+    v-bind:comments="post.Comments"
+    >
+    </Post>
   </div>
 </div>
 </template>
@@ -63,18 +62,15 @@
 
 <script>
 import Post from '../components/Post.vue'
-import Comment from '../components/Comment.vue'
 
 export default {
 	name: 'Feed',
 	components: {
 		Post,
-    Comment
 	},
   data() {
     return {
-      posts: [],
-      comments: []
+      posts: []
     }
   },
   mounted: function() {
