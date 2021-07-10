@@ -6,7 +6,7 @@
         <b-avatar :src="imageUser"></b-avatar>
         <p>{{ firstName }} {{ lastName }}</p>
       </span>
-      <span id="buttons" v-show="userAuth">
+      <span id="buttons" v-show="editButtons(postUserId) === true">
         <b-button-group class="mx-1">
         <b-button class="btn btn-warning" @click="editPost(postId, title, content, imageUrl)">Modifier</b-button>
         <b-button class="btn btn-danger" @click="deletePost(postId)">Supprimer</b-button>
@@ -15,20 +15,23 @@
     </div>
     <div id="body">
       <b-card-title>{{ title }}</b-card-title>
-      <b-card-text>{{ contentComment }}</b-card-text>
+      <b-card-text>{{ content }}</b-card-text>
       <img id="image" :src="imageUrl"/>
     </div>
     <div id="footer">
-      <b-button id="commentButton" variant="primary" @click="addComment">Ajouter un commentaire</b-button>
+      <b-link id="commentButton" variant="primary" @click="addComment">Ajouter un commentaire</b-link>
+      <span>Publié le {{ formatedDate }}</span>
     </div>
   </b-card>
   <Comment
   v-for="comment in comments"
   :key="comment"
-  v-bind:firstName="comment.firstName"
-  v-bind:lastName="comment.lastName"
+  v-bind:commentId="comment.id"
+  v-bind:commentPostId="comment.postId"
+  v-bind:commentUserId="comment.userId"
   v-bind:content="comment.content"
-  v-bind:imageUser="post.User.imageUrl"
+  v-bind:imageUrl="comment.imageUrl"
+  v-bind:createdDate="comment.createdAt"
   ></Comment>
 </div>
 </template>
@@ -36,6 +39,9 @@
 <style lang="scss">
 #post {
   margin-bottom: 5%;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #header {
@@ -61,17 +67,14 @@
 
 #image {
   width: 100%;
-  object-fit: contain;
+  height: 300px;
+  object-fit: scale-down;
 }
 
 #footer {
   margin-top: 3%;
   display: flex;
-}
-
-#commentButton {
-  margin-left: auto;
-  margin-right: auto;
+  justify-content: space-between;
 }
 
 @media all and (min-width: 300px) and (max-width: 780px){
@@ -119,6 +122,9 @@ export default {
     postUserId: {
       type: Number
     },
+    createdDate: {
+      type: String
+    },
     comments : {
       type: Array
     }
@@ -127,7 +133,14 @@ export default {
   data() {
     return {
       Comments: [],
-      userAuth: true,
+    }
+  },
+  computed: {
+    formatedDate: function() {
+      let string = this.createdDate;
+      let date = new Date(string);
+      let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      return date.toLocaleDateString("fr-FR", options);
     }
   },
   mounted: function() {
@@ -140,7 +153,7 @@ export default {
       let id = user.userId;
       let admin = user.admin;
       if (id == postUserId || admin == true){
-        this.userAuth = true
+        return true
       }
     },
     editPost(postId, title, content, imageUrl) {
@@ -176,9 +189,11 @@ export default {
         .then(() => { this.$router.go()})
         .catch(error => console.log('error', error));
     },
-    addComment(event) {
-      event.preventDefault()
-      this.$router.push('/createComment');
+    addComment(postId) {
+      this.$router.push({
+        path: '/CreateComment',
+        query: { postId }
+      })
     }
   }
 }

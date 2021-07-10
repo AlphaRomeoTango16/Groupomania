@@ -40,6 +40,11 @@ const routes = [
     name: 'CreateComment',
     component: () => import('../views/CreateComment.vue')
   },
+  {
+    path: '/editComment',
+    name: 'EditComment',
+    component: () => import('../views/EditComment.vue')
+  },
 ]
 
 const router = new VueRouter({

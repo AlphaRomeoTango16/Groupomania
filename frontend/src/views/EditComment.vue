@@ -2,7 +2,7 @@
  <div class="createComment">
     <b-form @submit="sendComment">
     <div>
-        <h1>Créer votre commentaire</h1>
+        <h1>Modifier votre commentaire</h1>
         <b-form-textarea
         id="content"
         v-model="form.content"

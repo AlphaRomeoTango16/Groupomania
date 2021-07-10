@@ -30,6 +30,7 @@
     v-bind:firstName="post.User.firstName"
     v-bind:lastName="post.User.lastName"
     v-bind:imageUser="post.User.imageUrl"
+    v-bind:createdDate="post.createdAt"
     v-bind:comments="post.Comments"
     >
     </Post>
@@ -51,7 +52,6 @@
 }
 
 #feed_list {
-  height: 90%;
   flex-direction: row;
   margin-top: 15%;
   margin-left: 15%;

@@ -6,16 +6,19 @@
         <b-avatar :src="imageUser"></b-avatar>
         <p>{{ firstName }} {{ lastName }}</p>
       </span>
-      <span id="buttons" v-show="userAuth">
+      <span id="buttons" v-show="editButtons(commentUserId) === true">
         <b-button-group class="mx-1">
-        <b-button class="btn btn-warning">Modifier</b-button>
-        <b-button class="btn btn-danger">Supprimer</b-button>
+        <b-button class="btn btn-warning" @click="editComment(commentId, content, imageUrl)">Modifier</b-button>
+        <b-button class="btn btn-danger" @click="deleteComment(commentId)">Supprimer</b-button>
       </b-button-group>
       </span>
     </div>
     <div id="body">
       <b-card-text> {{ content }} </b-card-text>
       <img id="image" :src="imageUrl"/>
+    </div>
+    <div id="footerComment">
+      <span>Publié le {{ formatedDate }}</span>
     </div>
   </b-card>
 </div>
@@ -56,6 +59,12 @@
   object-fit: contain;
 }
 
+#footerComment {
+  margin-top: 3%;
+  display: flex;
+  justify-content: flex-end;
+}
+
 </style>
 
 <script>
@@ -75,10 +84,75 @@ export default {
     },
     imageUser: {
       type: String
+    },
+    createdDate: {
+      type: String
+    },
+    commentId: {
+      type: Number
+    },
+    commentPostId: {
+      type: Number
     }
   },
   name: 'Comment',
+    data() {
+      return {
+      }
+  },
+  computed: {
+    formatedDate: function() {
+      let string = this.createdDate;
+      let date = new Date(string);
+      let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      return date.toLocaleDateString("fr-FR", options);
+    }
+  },
+   mounted: function() {
+    this.editButtons()
+  },
   methods: {
+    editButtons(commentUserId) {
+      let user = JSON.parse(localStorage.getItem("user"));
+      let id = user.userId;
+      let admin = user.admin;
+      if (id == commentUserId || admin == true){
+        return true
+      }
+    },  
+    editComment(commentId, content, imageUrl) {
+      this.$router.push({
+        path: '/EditComment',
+        query: { commentId, content, imageUrl }
+      })
+    },
+
+    deleteComment(commentId) {
+
+      let user = JSON.parse(localStorage.getItem("user"));
+      let token = user.token;
+      let bearerToken = "Bearer" + ' ' + token;
+
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", bearerToken);
+
+      var raw = "";
+
+      var requestOptions = {
+        method: 'DELETE',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      };
+
+      let url = "http://localhost:3000/api/comment/" + commentId;
+
+      fetch(url, requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .then(() => { this.$router.go()})
+        .catch(error => console.log('error', error));
+    },
   }
 }
 
