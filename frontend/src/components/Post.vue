@@ -29,9 +29,12 @@
   v-bind:commentId="comment.id"
   v-bind:commentPostId="comment.postId"
   v-bind:commentUserId="comment.userId"
-  v-bind:content="comment.content"
-  v-bind:imageUrl="comment.imageUrl"
-  v-bind:createdDate="comment.createdAt"
+  v-bind:commentFirstName="comment.User.firstName"
+  v-bind:commentLasttName="comment.User.lastName"
+  v-bind:commentImageUser="comment.User.imageUrl"
+  v-bind:commentContent="comment.content"
+  v-bind:commentImageUrl="comment.imageUrl"
+  v-bind:commentCreatedDate="comment.createdAt"
   ></Comment>
 </div>
 </template>
@@ -145,7 +148,6 @@ export default {
   },
   mounted: function() {
     this.editButtons()
-    this.loadComment()
   },
   methods: {
     editButtons(postUserId) {

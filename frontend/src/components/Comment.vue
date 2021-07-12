@@ -3,8 +3,8 @@
   <b-card>
     <div id="header">
       <span id="avatar">
-        <b-avatar :src="imageUser"></b-avatar>
-        <p>{{ firstName }} {{ lastName }}</p>
+        <b-avatar :src="commentImageUser"></b-avatar>
+        <p>{{ commentFirstName }} {{ commentLastName }}</p>
       </span>
       <span id="buttons" v-show="editButtons(commentUserId) === true">
         <b-button-group class="mx-1">
@@ -14,8 +14,8 @@
       </span>
     </div>
     <div id="body">
-      <b-card-text> {{ content }} </b-card-text>
-      <img id="image" :src="imageUrl"/>
+      <b-card-text> {{ commentContent }} </b-card-text>
+      <img id="image" :src="commentImageUrl"/>
     </div>
     <div id="footerComment">
       <span>Publié le {{ formatedDate }}</span>
@@ -70,22 +70,22 @@
 <script>
 export default {
   props: {
-    firstName: {
+    commentFirstName: {
       type: String
     },
-    lastName: {
+    commentLastName: {
       type: String
     },
-    imageUrl: {
+    commentImageUrl: {
       type: String
     },
-    content: {
+    commentContent: {
       type: String
     },
-    imageUser: {
+    commentImageUser: {
       type: String
     },
-    createdDate: {
+    commentCreatedDate: {
       type: String
     },
     commentId: {
@@ -102,7 +102,7 @@ export default {
   },
   computed: {
     formatedDate: function() {
-      let string = this.createdDate;
+      let string = this.commentCreatedDate;
       let date = new Date(string);
       let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
       return date.toLocaleDateString("fr-FR", options);

@@ -53,6 +53,30 @@ exports.login = (req, res, next) => {
         .catch(error => res.status(500).json({ error }));
 };
 
+exports.getOneUser = (req, res, next) => {
+    User.findByPk(req.params.id)
+    .then(user => res.status(200).json(user))
+    .catch(error => res.status(404).json({ error }));
+};
+
+exports.modifyUser = (req, res, next) => {
+    User.findByPk(req.params.id)
+    .then(user => {
+        if (req.token.userId == post.UserId || req.token.userAdmin) {
+            let userObject = JSON.parse(req.body.post);
+            if (req.file != undefined) {
+                userObject.imageUrl=`${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
+            }
+            User.update(userObject, {where: {id: req.params.id}})
+            .then(() => res.status(200).json({ message: 'Profile modifié !'}))
+            .catch(error => res.status(400).json({ error }));
+        } else {
+            res.status(403).json({ message: "Vous n'avez pas l'autorisation pour modifié ce post !" })
+        }
+    })
+    .catch(error => res.status(404).json({ error }));
+}
+
 exports.deleteUser = (req, res, next) => {
     User.findOne({ where : { emailAddress: req.body.emailAddress } })
         .then(user => {
