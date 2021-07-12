@@ -24,8 +24,8 @@
     </div>
   </b-card>
   <Comment
-  v-for="comment in comments"
-  :key="comment"
+  v-for="(comment, ct) in comments"
+  :key="ct"
   v-bind:commentId="comment.id"
   v-bind:commentPostId="comment.postId"
   v-bind:commentUserId="comment.userId"

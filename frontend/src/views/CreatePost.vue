@@ -6,7 +6,7 @@
         <b-form-textarea
         id="title"
         v-model="form.title"
-        placeholder="{title}"
+        placeholder="Écrivez votre titre"
         rows="1"
         max-rows="1"
         ></b-form-textarea>
@@ -26,7 +26,7 @@
     </div>
 
     <div>
-      <b-form-file id="image" type="file" name="image" v-model="form.fileInput" :state="Boolean(fileInput)" placeholder="Choississez une image ou glisser là ici" drop-placeholder="Glissez votre image ici">
+      <b-form-file id="image" type="file" name="image" v-model="form.fileInput" :state="Boolean(form.fileInput)" placeholder="Choississez une image ou glisser là ici" drop-placeholder="Glissez votre image ici">
       </b-form-file>
     </div>
 

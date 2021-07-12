@@ -45,6 +45,11 @@ const routes = [
     name: 'EditComment',
     component: () => import('../views/EditComment.vue')
   },
+  {
+    path: '/editProfile',
+    name: 'EditProfile',
+    component: () => import('../views/EditProfile.vue')
+  },
 ]
 
 const router = new VueRouter({

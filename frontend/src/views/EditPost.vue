@@ -1,5 +1,5 @@
 <template>
- <div class="createPost">
+ <div class="editPost">
     <b-form @submit="modifyPost(postId)">
     <div>
         <h1>Modifier votre post</h1>
@@ -26,7 +26,7 @@
     </div>
 
     <div>
-      <b-form-file id="image" type="file" name="image" v-model="form.fileInput" :state="Boolean(fileInput)" placeholder="Choississez une image ou glisser là ici" drop-placeholder="Glissez votre image ici">
+      <b-form-file id="image" type="file" name="image" v-model="form.fileInput" :state="Boolean(form.fileInput)" placeholder="Choississez une image ou glisser là ici" drop-placeholder="Glissez votre image ici">
       </b-form-file>
     </div>
 
@@ -38,7 +38,7 @@
 </template>
 
 <style lang="scss">
-.createPost {
+.editPost {
     background-color: rgb(216, 216, 216);
     margin-top: 50px;
     padding: 20px;
@@ -57,6 +57,17 @@
 
 <script>
 export default {
+    props: {
+      title: {
+        type: String
+      },
+      imageUrl: {
+        type: String
+      },
+      content: {
+        type: String
+      },  
+    },
     data() {
       return {
         form: {

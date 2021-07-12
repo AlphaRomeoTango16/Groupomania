@@ -63,7 +63,7 @@ exports.modifyUser = (req, res, next) => {
     User.findByPk(req.params.id)
     .then(user => {
         if (req.token.userId == post.UserId || req.token.userAdmin) {
-            let userObject = JSON.parse(req.body.post);
+            let userObject = JSON.parse(req.body.user);
             if (req.file != undefined) {
                 userObject.imageUrl=`${req.protocol}://${req.get('host')}/images/${req.file.filename}`;
             }

@@ -1,8 +1,7 @@
 <template>
- <div class="register">
-    <b-form @submit="onSubmit">
-      <h1>Créer votre compte</h1>
-      <b-form-group
+ <div class="editProfile">
+    <b-form @submit="modifyProfile(userId)">
+    <b-form-group
         id="input-group-1"
         label="Votre prénom"
         label-for="firstName"
@@ -11,7 +10,7 @@
           id="firstName"
           name="firstName"
           v-model="form.firstName"
-          type="text"
+          type="name"
           placeholder="Entrer votre prénom"
           required
         ></b-form-input>
@@ -26,7 +25,7 @@
           id="lastName"
           name="lastName"
           v-model="form.lastName"
-          type="text"
+          type="name"
           placeholder="Entrer votre nom de famille"
           required
         ></b-form-input>
@@ -59,18 +58,18 @@
       </b-form-group>
 
       <b-form-group id="input-group-5" label="Votre photo de profile" label-for="image">
-      <b-form-file id="image" type="file" name="image" v-model="form.fileInput" :state="Boolean(form.fileInput)" placeholder="Choississez une image ou glisser là ici" drop-placeholder="Glissez votre image ici">
+      <b-form-file id="image" type="file" name="image" v-model="form.fileInput" :state="Boolean(fileInput)" placeholder="Choississez une image ou glisser là ici" drop-placeholder="Glissez votre image ici">
       </b-form-file>
       </b-form-group>
       <div class="d-flex justify-content-center">
-        <b-button type="submit" variant="primary">S'inscrire</b-button>
+        <b-button type="submit" variant="primary">Modifier mon profile</b-button>
       </div>
     </b-form>
   </div>
 </template>
 
 <style lang="scss">
-.register {
+.editProfile {
     background-color: rgb(216, 216, 216);
     margin-top: 50px;
     padding: 20px;
@@ -79,54 +78,33 @@
     margin-right: auto;
     border-radius: 20px;
     border: 1px solid darkgray;
-} 
+}
+
+.d-flex {
+    margin-top: 5%;
+}
 
 </style>
 
 <script>
 export default {
-  data() {
-    return {
-      form: {
-        user: {
-          firstName: '',
-          lastName: '',
-          emailAddress: '',
-          password: ''
-        },
-        image: {
-          fileInput: ''
+    data() {
+      return {
+        form: {
+          user: {
+            firstName: '',
+            lastName: '',
+            emailAddress: '',
+            password: ''
+          },
+          image: {
+            fileInput: ''
+          }
         }
       }
+    },
+    methods: {
+      
     }
-  },
-  methods: {
-    onSubmit(event) {
-      event.preventDefault()
-
-      const data = {
-        firstName: document.getElementById("firstName").value,
-        lastName: document.getElementById("lastName").value,
-        emailAddress: document.getElementById("emailAddress").value,
-        password: document.getElementById("password").value,
-      }
-
-      let formData = new FormData();
-      formData.append("user", JSON.stringify(data));
-      formData.append("image", document.getElementById("image").files[0]);
-
-      let requestOptions = {
-        method: 'POST',
-        body: formData,
-        redirect: 'follow'
-      };
-
-      fetch("http://localhost:3000/api/auth/signup", requestOptions)
-        .then(response => response.text())
-        .then(() => {this.$router.push('/connection')})
-        .catch(error => console.log('error', error));
-          }
   }
-}
-
 </script>

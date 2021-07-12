@@ -8,7 +8,10 @@
         <b-navbar-nav class="ml-auto">
           <b-nav-item-dropdown right>
           <template #button-content id="profile">
-            <em>Profile</em>
+            <span id="avatarNav">
+              <b-avatar :src="user.imageUrl"></b-avatar>
+              <p>{{ user.firstName }} {{ user.lastName }}</p>
+            </span>
           </template>
           <b-dropdown-item @click="createPost">Créer un post</b-dropdown-item>
           <b-dropdown-item @click="editProfile">Modifier profile</b-dropdown-item>
@@ -20,8 +23,8 @@
   </div>
   <div id="feed_list">
     <Post
-    v-for="post in posts"
-    :key="post"
+    v-for="(post, pt) in posts"
+    :key="pt"
     v-bind:postId="post.id"
     v-bind:postUserId="post.UserId"
     v-bind:imageUrl="post.imageUrl"
@@ -42,6 +45,22 @@
 
 #navbar #logo {
   width: 30%;
+}
+
+#__BVID__11__BV_toggle_ {
+  display: flex;
+  align-items: center;
+}
+
+#avatarNav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#avatarNav p {
+  margin-left: 5%;
+  margin-bottom: 0px;
 }
 
 #feed_page {
@@ -68,15 +87,50 @@ export default {
 	components: {
 		Post,
 	},
+  props: {
+    firstName: {
+      type: String
+    },
+    lastName: {
+      type: String
+    },
+    imageUrl: {
+      type: String
+    },
+  },
   data() {
     return {
-      posts: []
+      posts: [],
+      user: {}
     }
   },
   mounted: function() {
-      this.loadPosts()
+      this.loadUser();
+      this.loadPosts();
   },
   methods: {
+    loadUser() {
+      let user = JSON.parse(localStorage.getItem("user"));
+      let token = user.token;
+      let bearerToken = "Bearer" + ' ' + token;
+      let userId = user.userId;
+
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", bearerToken);
+
+      var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+
+      let url = "http://localhost:3000/api/auth/" + userId;
+
+      fetch(url, requestOptions)
+        .then(response => response.json())
+        .then(result => console.log(this.user = result))
+        .catch(error => console.log('error', error));
+    },
     loadPosts() {
       var requestOptions = {
         method: 'GET',
@@ -91,6 +145,10 @@ export default {
     createPost(event) {
       event.preventDefault()
       this.$router.push('/createPost');
+    },
+    editProfile(event) {
+      event.preventDefault()
+      this.$router.push('/editProfile');
     },
     logout(event) {
       event.preventDefault()
