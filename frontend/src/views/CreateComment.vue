@@ -1,6 +1,6 @@
 <template>
  <div class="createComment">
-    <b-form @submit="sendComment">
+    <b-form @submit="sendComment(postId)">
     <div>
         <h1>Créer votre commentaire</h1>
         <b-form-textarea

@@ -3,10 +3,10 @@
   <b-card>
     <div id="header">
       <span id="avatar">
-        <b-avatar :src="imageUser"></b-avatar>
-        <p>{{ firstName }} {{ lastName }}</p>
+        <b-avatar :src="post.User.imageUrl"></b-avatar>
+        <p>{{ post.User.firstName }} {{ post.User.lastName }}</p>
       </span>
-      <span id="buttons" v-show="editButtons(postUserId) === true">
+      <span id="buttons" v-show="editButtons()">
         <b-button-group class="mx-1">
         <b-button class="btn btn-warning" @click="editPost(postId, title, content, imageUrl)">Modifier</b-button>
         <b-button class="btn btn-danger" @click="deletePost(postId)">Supprimer</b-button>
@@ -14,33 +14,26 @@
       </span>
     </div>
     <div id="body">
-      <b-card-title>{{ title }}</b-card-title>
-      <b-card-text>{{ content }}</b-card-text>
-      <img id="image" :src="imageUrl"/>
+      <b-card-title>{{ post.title }}</b-card-title>
+      <b-card-text>{{ post.content }}</b-card-text>
+      <img id="image" :src="post.imageUrl"/>
     </div>
     <div id="footer">
-      <b-link id="commentButton" variant="primary" @click="addComment">Ajouter un commentaire</b-link>
+      <b-link id="commentButton" variant="primary" @click="addComment(postId)">Ajouter un commentaire</b-link>
       <span>Publié le {{ formatedDate }}</span>
     </div>
   </b-card>
   <Comment
   v-for="(comment, ct) in comments"
   :key="ct"
-  v-bind:commentId="comment.id"
-  v-bind:commentPostId="comment.postId"
-  v-bind:commentUserId="comment.userId"
-  v-bind:commentFirstName="comment.User.firstName"
-  v-bind:commentLasttName="comment.User.lastName"
-  v-bind:commentImageUser="comment.User.imageUrl"
-  v-bind:commentContent="comment.content"
-  v-bind:commentImageUrl="comment.imageUrl"
-  v-bind:commentCreatedDate="comment.createdAt"
+  v-bind:comment="comment"
   ></Comment>
 </div>
 </template>
 
 <style lang="scss">
 #post {
+  margin-top: 5%;
   margin-bottom: 5%;
   width: 80%;
   margin-left: auto;
@@ -101,32 +94,11 @@ export default {
     Comment
   },
   props: {
-    title: {
-      type: String
+    post: {
+      type: Object
     },
-    firstName: {
-      type: String
-    },
-    lastName: {
-      type: String
-    },
-    imageUrl: {
-      type: String
-    },
-    content: {
-      type: String
-    },
-    imageUser: {
-      type: String
-    },
-    postId: {
-      type: Number
-    },
-    postUserId: {
-      type: Number
-    },
-    createdDate: {
-      type: String
+    User: {
+      type: Object
     },
     comments : {
       type: Array
@@ -140,24 +112,29 @@ export default {
   },
   computed: {
     formatedDate: function() {
-      let string = this.createdDate;
-      let date = new Date(string);
-      let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      return date.toLocaleDateString("fr-FR", options);
+      let createdDate = this.post.createdAt;
+      let updatedDate = this.post.updatedAt;
+      let primitiveCreatedDate = createdDate.valueOf();
+      let primitiveUpdatedDate = updatedDate.valueOf();
+      if (primitiveUpdatedDate  > primitiveCreatedDate) {
+        let date = new Date(primitiveUpdatedDate);
+        let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString("fr-FR", options);
+      } else {
+        let date = new Date(primitiveCreatedDate);
+        let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        return date.toLocaleDateString("fr-FR", options);
+      }
     }
   },
   mounted: function() {
     this.editButtons()
   },
   methods: {
-    editButtons(postUserId) {
+    editButtons() {
       let user = JSON.parse(localStorage.getItem("user"));
-      let id = user.userId;
-      let admin = user.admin;
-      if (id == postUserId || admin == true){
-        return true
-      }
-    },
+      return user.userId == this.post.UserId || user.admin;
+    },  
     editPost(postId, title, content, imageUrl) {
       this.$router.push({
         path: '/EditPost',

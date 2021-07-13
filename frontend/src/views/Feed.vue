@@ -25,15 +25,7 @@
     <Post
     v-for="(post, pt) in posts"
     :key="pt"
-    v-bind:postId="post.id"
-    v-bind:postUserId="post.UserId"
-    v-bind:imageUrl="post.imageUrl"
-    v-bind:title="post.title"
-    v-bind:content="post.content"
-    v-bind:firstName="post.User.firstName"
-    v-bind:lastName="post.User.lastName"
-    v-bind:imageUser="post.User.imageUrl"
-    v-bind:createdDate="post.createdAt"
+    v-bind:post="post"
     v-bind:comments="post.Comments"
     >
     </Post>

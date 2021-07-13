@@ -3,10 +3,10 @@
   <b-card>
     <div id="header">
       <span id="avatar">
-        <b-avatar :src="commentImageUser"></b-avatar>
-        <p>{{ commentFirstName }} {{ commentLastName }}</p>
+        <b-avatar :src="comment.User.imageUrl"></b-avatar>
+        <p>{{ comment.User.firstName }} {{ comment.User.lastName }}</p>
       </span>
-      <span id="buttons" v-show="editButtons(commentUserId) === true">
+      <span id="buttons" v-show="editButtons()">
         <b-button-group class="mx-1">
         <b-button class="btn btn-warning" @click="editComment(commentId, content, imageUrl)">Modifier</b-button>
         <b-button class="btn btn-danger" @click="deleteComment(commentId)">Supprimer</b-button>
@@ -14,8 +14,8 @@
       </span>
     </div>
     <div id="body">
-      <b-card-text> {{ commentContent }} </b-card-text>
-      <img id="image" :src="commentImageUrl"/>
+      <b-card-text> {{ comment.content }} </b-card-text>
+      <img id="image" :src="comment.imageUrl"/>
     </div>
     <div id="footerComment">
       <span>Publié le {{ formatedDate }}</span>
@@ -25,10 +25,6 @@
 </template>
 
 <style lang="scss">
-#comment {
-  margin-bottom: 5%;
-}
-
 #comment .card-body {
   background-color: #e8e8e8;
 }
@@ -70,29 +66,8 @@
 <script>
 export default {
   props: {
-    commentFirstName: {
-      type: String
-    },
-    commentLastName: {
-      type: String
-    },
-    commentImageUrl: {
-      type: String
-    },
-    commentContent: {
-      type: String
-    },
-    commentImageUser: {
-      type: String
-    },
-    commentCreatedDate: {
-      type: String
-    },
-    commentId: {
-      type: Number
-    },
-    commentPostId: {
-      type: Number
+    comment: {
+      type: Object
     }
   },
   name: 'Comment',
@@ -102,7 +77,7 @@ export default {
   },
   computed: {
     formatedDate: function() {
-      let string = this.commentCreatedDate;
+      let string = this.comment.createdAt;
       let date = new Date(string);
       let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
       return date.toLocaleDateString("fr-FR", options);
@@ -112,13 +87,9 @@ export default {
     this.editButtons()
   },
   methods: {
-    editButtons(commentUserId) {
+    editButtons() {
       let user = JSON.parse(localStorage.getItem("user"));
-      let id = user.userId;
-      let admin = user.admin;
-      if (id == commentUserId || admin == true){
-        return true
-      }
+      return user.userId == this.comment.UserId || user.admin;
     },  
     editComment(commentId, content, imageUrl) {
       this.$router.push({
