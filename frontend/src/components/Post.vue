@@ -8,8 +8,11 @@
       </span>
       <span id="buttons" v-show="editButtons()">
         <b-button-group class="mx-1">
-        <b-button class="btn btn-warning" @click="editPost(postId, title, content, imageUrl)">Modifier</b-button>
-        <b-button class="btn btn-danger" @click="deletePost(postId)">Supprimer</b-button>
+        <b-button class="btn btn-warning" @click="$bvModal.show('editPost')">Modifier</b-button>
+          <EditPost
+          v-bind:post="post"
+          ></EditPost>
+        <b-button class="btn btn-danger" @click="deletePost()">Supprimer</b-button>
       </b-button-group>
       </span>
     </div>
@@ -19,7 +22,10 @@
       <img id="image" :src="post.imageUrl"/>
     </div>
     <div id="footer">
-      <b-link id="commentButton" variant="primary" @click="addComment(postId)">Ajouter un commentaire</b-link>
+      <b-link id="commentButton" variant="primary" @click="$bvModal.show('createComment')">Ajouter un commentaire</b-link>
+         <CreateNewComment
+          v-bind:post="post"
+          ></CreateNewComment>
       <span>Publié le {{ formatedDate }}</span>
     </div>
   </b-card>
@@ -88,10 +94,14 @@
 
 <script>
 import Comment from '../components/Comment.vue'
+import EditPost from '../components/EditPost.vue'
+import CreateNewComment from '../components/CreateNewComment.vue'
 
 export default {
   components: {
-    Comment
+    Comment,
+    CreateNewComment,
+    EditPost
   },
   props: {
     post: {
@@ -142,7 +152,7 @@ export default {
       })
     },
 
-    deletePost(postId) {
+    deletePost() {
 
       let user = JSON.parse(localStorage.getItem("user"));
       let token = user.token;
@@ -160,7 +170,7 @@ export default {
         redirect: 'follow'
       };
 
-      let url = "http://localhost:3000/api/post/" + postId;
+      let url = "http://localhost:3000/api/post/" + this.post.id;
 
       fetch(url, requestOptions)
         .then(response => response.text())
@@ -168,12 +178,6 @@ export default {
         .then(() => { this.$router.go()})
         .catch(error => console.log('error', error));
     },
-    addComment(postId) {
-      this.$router.push({
-        path: '/CreateComment',
-        query: { postId }
-      })
-    }
   }
 }
 

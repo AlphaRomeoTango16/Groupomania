@@ -77,7 +77,13 @@ export default {
         };
 
         fetch("http://localhost:3000/api/auth/login", requestOptions)
-          .then((response => response.json()))
+          .then((response => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              throw new Error('Invalid User')
+            }
+          }))
           .then(result => {localStorage.setItem("user", JSON.stringify(result))})
           .then(() => {this.$router.push('/feed')})
           .catch(error => console.log('error', error));

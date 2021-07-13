@@ -26,29 +26,9 @@ const routes = [
     component: () => import('../views/Feed.vue')
   },
   {
-    path: '/createPost',
-    name: 'CreatePost',
-    component: () => import('../views/CreatePost.vue')
-  },
-  {
-    path: '/editPost',
-    name: 'EditPost',
-    component: () => import('../views/EditPost.vue')
-  },
-  {
-    path: '/createComment',
-    name: 'CreateComment',
-    component: () => import('../views/CreateComment.vue')
-  },
-  {
     path: '/editComment',
     name: 'EditComment',
     component: () => import('../views/EditComment.vue')
-  },
-  {
-    path: '/editProfile',
-    name: 'EditProfile',
-    component: () => import('../views/EditProfile.vue')
   },
 ]
 

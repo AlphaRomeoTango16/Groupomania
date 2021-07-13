@@ -13,8 +13,9 @@
               <p>{{ user.firstName }} {{ user.lastName }}</p>
             </span>
           </template>
-          <b-dropdown-item @click="createPost">Créer un post</b-dropdown-item>
-          <b-dropdown-item @click="editProfile">Modifier profile</b-dropdown-item>
+          <b-dropdown-item @click="$bvModal.show('createPost')">Créer un post</b-dropdown-item>
+          <b-dropdown-item @click="$bvModal.show('deleteProfile')">Supprimer mon profile</b-dropdown-item>
+            <DeleteProfile></DeleteProfile>
           <b-dropdown-item @click.prevent="logout">Déconnexion</b-dropdown-item>
         </b-nav-item-dropdown>
         </b-navbar-nav>
@@ -29,6 +30,7 @@
     v-bind:comments="post.Comments"
     >
     </Post>
+    <CreateNewPost></CreateNewPost>
   </div>
 </div>
 </template>
@@ -73,11 +75,15 @@
 
 <script>
 import Post from '../components/Post.vue'
+import CreateNewPost from '../components/CreateNewPost.vue'
+import DeleteProfile from '../components/DeleteProfile.vue'
 
 export default {
 	name: 'Feed',
 	components: {
 		Post,
+    CreateNewPost,
+    DeleteProfile
 	},
   props: {
     firstName: {
