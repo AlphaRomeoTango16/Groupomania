@@ -14,6 +14,11 @@
             </span>
           </template>
           <b-dropdown-item @click="$bvModal.show('createPost')">Créer un post</b-dropdown-item>
+            <CreateNewPost
+            v-for="(post, pt) in posts"
+            :key="pt"
+            v-bind:post="post"
+            ></CreateNewPost>
           <b-dropdown-item @click="$bvModal.show('deleteProfile')">Supprimer mon profile</b-dropdown-item>
             <DeleteProfile></DeleteProfile>
           <b-dropdown-item @click.prevent="logout">Déconnexion</b-dropdown-item>
@@ -30,7 +35,6 @@
     v-bind:comments="post.Comments"
     >
     </Post>
-    <CreateNewPost></CreateNewPost>
   </div>
 </div>
 </template>

@@ -10,7 +10,9 @@
         <b-button-group class="mx-1">
         <b-button class="btn btn-warning" @click="$bvModal.show('editPost')">Modifier</b-button>
           <EditPost
-          v-bind:post="post"
+            v-for="(post, pt) in posts"
+            :key="pt"
+            v-bind:post="post"
           ></EditPost>
         <b-button class="btn btn-danger" @click="deletePost()">Supprimer</b-button>
       </b-button-group>
@@ -24,7 +26,9 @@
     <div id="footer">
       <b-link id="commentButton" variant="primary" @click="$bvModal.show('createComment')">Ajouter un commentaire</b-link>
          <CreateNewComment
-          v-bind:post="post"
+           v-for="(comment, ct) in comments"
+          :key="ct"
+          v-bind:comment="comment"
           ></CreateNewComment>
       <span>Publié le {{ formatedDate }}</span>
     </div>
@@ -111,6 +115,9 @@ export default {
       type: Object
     },
     comments : {
+      type: Array
+    },
+    posts : {
       type: Array
     }
   },
