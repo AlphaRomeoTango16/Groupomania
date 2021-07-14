@@ -66,6 +66,9 @@
         <b-button type="submit" variant="primary">S'inscrire</b-button>
       </div>
     </b-form>
+    <div>
+      <router-link :to="{ name: 'Home' }">Retourner à l'accueil</router-link>
+    </div>
   </div>
 </template>
 

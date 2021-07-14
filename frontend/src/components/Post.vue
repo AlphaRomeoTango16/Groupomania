@@ -8,7 +8,7 @@
       </span>
       <span id="buttons" v-show="editButtons()">
         <b-button-group class="mx-1">
-        <b-button class="btn btn-warning" @click="$bvModal.show('editPost')">Modifier</b-button>
+        <b-button class="btn btn-warning" @click="$bvModal.show(post.id)">Modifier</b-button>
           <EditPost
             v-bind:post="post"
           ></EditPost>
@@ -19,10 +19,10 @@
     <div id="body">
       <b-card-title>{{ post.title }}</b-card-title>
       <b-card-text>{{ post.content }}</b-card-text>
-      <img id="image" :src="post.imageUrl"/>
+      <img v-show="showImage()" id="image" :src="post.imageUrl"/>
     </div>
     <div id="footer">
-      <b-link id="commentButton" variant="primary" @click="$bvModal.show('createComment')">Ajouter un commentaire</b-link>
+      <b-link id="commentButton" variant="primary" @click="$bvModal.show('comment'+post.id)">Ajouter un commentaire</b-link>
          <CreateNewComment
           v-bind:post="post"
           ></CreateNewComment>
@@ -92,6 +92,10 @@
     #avatar {
     margin-bottom: 3%;
   }
+    #footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 </style>
@@ -147,11 +151,15 @@ export default {
   },
   mounted: function() {
     this.editButtons()
+    this.showImage()
   },
   methods: {
     editButtons() {
       let user = JSON.parse(localStorage.getItem("user"));
       return user.userId == this.post.UserId || user.admin;
+    },
+    showImage() {
+      return this.post.imageUrl != undefined;
     },
     deletePost() {
 

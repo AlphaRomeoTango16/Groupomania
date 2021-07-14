@@ -8,17 +8,17 @@
       </span>
       <span id="buttons" v-show="editButtons()">
         <b-button-group class="mx-1">
-        <b-button class="btn btn-warning" @click="$bvModal.show('editComment')">Modifier</b-button>
+        <b-button class="btn btn-warning" @click="$bvModal.show(comment.id)">Modifier</b-button>
           <EditComment
             v-bind:comment="comment"
           ></EditComment>
-        <b-button class="btn btn-danger" @click="deleteComment(commentId)">Supprimer</b-button>
+        <b-button class="btn btn-danger" @click="deleteComment()">Supprimer</b-button>
       </b-button-group>
       </span>
     </div>
     <div id="body">
       <b-card-text> {{ comment.content }} </b-card-text>
-      <img id="image" :src="comment.imageUrl"/>
+      <img v-show="showImage()" id="image" :src="comment.imageUrl"/>
     </div>
     <div id="footerComment">
       <span>{{ formatedDate }}</span>
@@ -28,6 +28,10 @@
 </template>
 
 <style lang="scss">
+#comment .card {
+  border: 1px solid #797979;
+}
+
 #comment .card-body {
   background-color: #e8e8e8;
 }
@@ -104,13 +108,17 @@ export default {
   },
    mounted: function() {
     this.editButtons()
+    this.showImage()
   },
   methods: {
     editButtons() {
       let user = JSON.parse(localStorage.getItem("user"));
       return user.userId == this.comment.UserId || user.admin;
     },
-    deleteComment(commentId) {
+    showImage() {
+      return this.comment.imageUrl != undefined;
+    },
+    deleteComment() {
 
       let user = JSON.parse(localStorage.getItem("user"));
       let token = user.token;
@@ -128,7 +136,7 @@ export default {
         redirect: 'follow'
       };
 
-      let url = "http://localhost:3000/api/comment/" + commentId;
+      let url = "http://localhost:3000/api/comment/" + this.comment.id;
 
       fetch(url, requestOptions)
         .then(response => response.text())

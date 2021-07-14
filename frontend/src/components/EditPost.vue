@@ -1,5 +1,5 @@
 <template>
-  <b-modal id="editPost" hide-footer title="Modifier mon post">
+  <b-modal :id="post.id" hide-footer title="Modifier mon post">
     <div class="d-block text-center">
       <b-form>
         <div>
@@ -63,7 +63,8 @@ export default {
   },
   props: {
     post: {
-      type: Object
+      type: Object,
+      id: [String, Number]
     },
   },
   methods: {

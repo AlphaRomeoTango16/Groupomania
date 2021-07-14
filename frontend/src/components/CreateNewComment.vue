@@ -1,5 +1,5 @@
 <template>
-  <b-modal id="createComment" hide-footer title="Créer un commentaire">
+  <b-modal :id="'comment'+post.id" hide-footer title="Créer un commentaire">
     <div class="d-block text-center">
       <b-form>
         <div>
@@ -25,7 +25,7 @@
     </div>
     <br>
     <div>
-      <b-button @click="$bvModal.hide('createComment')">Annuler</b-button>
+      <b-button @click="$bvModal.hide('comment'+post.id)">Annuler</b-button>
       <b-button class="ml-2" variant="primary" @click="sendComment">Envoyer</b-button>
     </div>
   </b-modal>
@@ -52,11 +52,11 @@ export default {
   },
   props: {
     comment: {
-      type: Object
+      type: Object,
     },
     post: {
       type: Object
-    },
+    }
   },
   methods: {
       sendComment() {
@@ -74,7 +74,7 @@ export default {
         }
 
         let formData = new FormData();
-        formData.append("post", JSON.stringify(data));
+        formData.append("comment", JSON.stringify(data));
         formData.append("image", document.getElementById("commentPicture").files[0]);  
 
         var requestOptions = {

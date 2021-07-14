@@ -41,8 +41,8 @@ exports.deleteComment = (req, res, next) => {
     Comment.findByPk(req.params.id)
     .then(comment => {
         if (req.token.userId == comment.UserId || req.token.userAdmin) {
-            if (post.imageUrl != undefined) {
-                const filename = post.imageUrl.split('/images/')[1];
+            if (comment.imageUrl != undefined) {
+                const filename = comment.imageUrl.split('/images/')[1];
                 fs.unlink(`images/${filename}`, () => {
                     Comment.destroy({
                         where: {

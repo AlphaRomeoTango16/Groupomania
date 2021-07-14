@@ -1,5 +1,5 @@
 <template>
-  <b-modal id="editComment" hide-footer title="Modifier mon commentaire">
+  <b-modal :id="comment.id" hide-footer title="Modifier mon commentaire">
     <div class="d-block text-center">
       <b-form>
         <div>
