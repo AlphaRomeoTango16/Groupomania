@@ -10,8 +10,6 @@
         <b-button-group class="mx-1">
         <b-button class="btn btn-warning" @click="$bvModal.show('editPost')">Modifier</b-button>
           <EditPost
-            v-for="(post, pt) in posts"
-            :key="pt"
             v-bind:post="post"
           ></EditPost>
         <b-button class="btn btn-danger" @click="deletePost()">Supprimer</b-button>
@@ -26,11 +24,9 @@
     <div id="footer">
       <b-link id="commentButton" variant="primary" @click="$bvModal.show('createComment')">Ajouter un commentaire</b-link>
          <CreateNewComment
-           v-for="(comment, ct) in comments"
-          :key="ct"
-          v-bind:comment="comment"
+          v-bind:post="post"
           ></CreateNewComment>
-      <span>Publié le {{ formatedDate }}</span>
+      <span id="datePost">{{ formatedDate }}</span>
     </div>
   </b-card>
   <Comment
@@ -83,6 +79,10 @@
   justify-content: space-between;
 }
 
+#datePost {
+  font-size: 0.9em;
+}
+
 @media all and (min-width: 300px) and (max-width: 780px){
 
     #header {
@@ -129,18 +129,19 @@ export default {
   },
   computed: {
     formatedDate: function() {
-      let createdDate = this.post.createdAt;
-      let updatedDate = this.post.updatedAt;
-      let primitiveCreatedDate = createdDate.valueOf();
-      let primitiveUpdatedDate = updatedDate.valueOf();
-      if (primitiveUpdatedDate  > primitiveCreatedDate) {
-        let date = new Date(primitiveUpdatedDate);
-        let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        return date.toLocaleDateString("fr-FR", options);
+      const createdDate = this.post.createdAt;
+      const dateC = new Date(createdDate);
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const fCreatedDate = dateC.toLocaleDateString("fr-FR", options);
+
+      const updatedDate = this.post.updatedAt;
+      const dateU = new Date(updatedDate);
+      const fUpdateddDate = dateU.toLocaleDateString("fr-FR", options);
+
+      if (fUpdateddDate  > fCreatedDate) {
+        return "Mis à jour le" + ' ' + fUpdateddDate;
       } else {
-        let date = new Date(primitiveCreatedDate);
-        let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        return date.toLocaleDateString("fr-FR", options);
+        return "Publié le" + ' ' + fCreatedDate;
       }
     }
   },
@@ -151,14 +152,7 @@ export default {
     editButtons() {
       let user = JSON.parse(localStorage.getItem("user"));
       return user.userId == this.post.UserId || user.admin;
-    },  
-    editPost(postId, title, content, imageUrl) {
-      this.$router.push({
-        path: '/EditPost',
-        query: { postId, title, content, imageUrl }
-      })
     },
-
     deletePost() {
 
       let user = JSON.parse(localStorage.getItem("user"));

@@ -1,21 +1,11 @@
 <template>
-  <b-modal id="editPost" hide-footer title="Modifier mon post">
+  <b-modal id="editComment" hide-footer title="Modifier mon commentaire">
     <div class="d-block text-center">
       <b-form>
         <div>
           <b-form-textarea
-          id="title"
-          :placeholder="post.title"
-          v-model="form.title"
-          rows="1"
-          max-rows="1"
-          ></b-form-textarea>
-        </div>
-        <br>
-        <div>
-          <b-form-textarea
           id="content"
-          :placeholder="post.content"
+          :placeholder="comment.content"
           v-model="form.content"
           rows="5"
           max-rows="10"
@@ -35,8 +25,8 @@
     </div>
     <br>
     <div>
-      <b-button @click="$bvModal.hide('editPost')">Annuler</b-button>
-      <b-button class="ml-2" variant="primary" @click="modifyPost">Envoyer</b-button>
+      <b-button @click="$bvModal.hide('editComment')">Annuler</b-button>
+      <b-button class="ml-2" variant="primary" @click="modifyComment">Envoyer</b-button>
     </div>
   </b-modal>
 </template>
@@ -47,12 +37,11 @@
 
 <script>
 export default {
-  name: 'EditPost',
+  name: 'EditComment',
     data() {
       return {
           form: {
-            post: {
-                title: '',
+            comment: {
                 content: ''
             },
             image: {
@@ -62,17 +51,17 @@ export default {
       }
   },
   props: {
-    post: {
+    comment: {
       type: Object
     },
   },
   methods: {
-      modifyPost() {
+      modifyComment() {
 
         let user = JSON.parse(localStorage.getItem("user"));
         let token = user.token;
         let bearerToken = "Bearer" + ' ' + token;
-        let postId = this.post.id;
+        let commentId = this.comment.id;
 
         var myHeaders = new Headers();
         myHeaders.append("Authorization", bearerToken);
@@ -83,7 +72,7 @@ export default {
         }
 
         let formData = new FormData();
-        formData.append("post", JSON.stringify(data));
+        formData.append("comment", JSON.stringify(data));
         formData.append("image", document.getElementById("picture").files[0]);  
 
         var requestOptions = {
@@ -93,7 +82,7 @@ export default {
         redirect: 'follow'
         };
 
-        let url = "http://localhost:3000/api/post/" + postId;
+        let url = "http://localhost:3000/api/comment/" + commentId;
 
         fetch(url, requestOptions)
         .then(response => response.text())

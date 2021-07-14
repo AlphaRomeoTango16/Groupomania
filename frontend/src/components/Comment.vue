@@ -8,7 +8,10 @@
       </span>
       <span id="buttons" v-show="editButtons()">
         <b-button-group class="mx-1">
-        <b-button class="btn btn-warning" @click="editComment(commentId, content, imageUrl)">Modifier</b-button>
+        <b-button class="btn btn-warning" @click="$bvModal.show('editComment')">Modifier</b-button>
+          <EditComment
+            v-bind:comment="comment"
+          ></EditComment>
         <b-button class="btn btn-danger" @click="deleteComment(commentId)">Supprimer</b-button>
       </b-button-group>
       </span>
@@ -18,7 +21,7 @@
       <img id="image" :src="comment.imageUrl"/>
     </div>
     <div id="footerComment">
-      <span>Publié le {{ formatedDate }}</span>
+      <span>{{ formatedDate }}</span>
     </div>
   </b-card>
 </div>
@@ -59,12 +62,18 @@
   margin-top: 3%;
   display: flex;
   justify-content: flex-end;
+  font-size: 0.9em;
 }
 
 </style>
 
 <script>
+import EditComment from '../components/EditComment.vue'
+
 export default {
+  components: {
+    EditComment
+  },
   props: {
     comment: {
       type: Object
@@ -77,11 +86,21 @@ export default {
   },
   computed: {
     formatedDate: function() {
-      let string = this.comment.createdAt;
-      let date = new Date(string);
-      let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      return date.toLocaleDateString("fr-FR", options);
-    }
+          const createdDate = this.comment.createdAt;
+          const dateC = new Date(createdDate);
+          const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+          const fCreatedDate = dateC.toLocaleDateString("fr-FR", options);
+
+          const updatedDate = this.comment.updatedAt;
+          const dateU = new Date(updatedDate);
+          const fUpdateddDate = dateU.toLocaleDateString("fr-FR", options);
+
+          if (fUpdateddDate  > fCreatedDate) {
+            return "Mis à jour le" + ' ' + fUpdateddDate;
+          } else {
+            return "Publié le" + ' ' + fCreatedDate;
+          }
+        }
   },
    mounted: function() {
     this.editButtons()
@@ -90,14 +109,7 @@ export default {
     editButtons() {
       let user = JSON.parse(localStorage.getItem("user"));
       return user.userId == this.comment.UserId || user.admin;
-    },  
-    editComment(commentId, content, imageUrl) {
-      this.$router.push({
-        path: '/EditComment',
-        query: { commentId, content, imageUrl }
-      })
     },
-
     deleteComment(commentId) {
 
       let user = JSON.parse(localStorage.getItem("user"));

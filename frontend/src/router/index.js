@@ -25,11 +25,6 @@ const routes = [
     name: 'Feed',
     component: () => import('../views/Feed.vue')
   },
-  {
-    path: '/editComment',
-    name: 'EditComment',
-    component: () => import('../views/EditComment.vue')
-  },
 ]
 
 const router = new VueRouter({
