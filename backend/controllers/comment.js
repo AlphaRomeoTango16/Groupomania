@@ -41,8 +41,18 @@ exports.deleteComment = (req, res, next) => {
     Comment.findByPk(req.params.id)
     .then(comment => {
         if (req.token.userId == comment.UserId || req.token.userAdmin) {
-            const filename = comment.imageUrl.split('/images/')[1];
-            fs.unlink(`images/${filename}`, () => {
+            if (post.imageUrl != undefined) {
+                const filename = post.imageUrl.split('/images/')[1];
+                fs.unlink(`images/${filename}`, () => {
+                    Comment.destroy({
+                        where: {
+                            id: req.params.id
+                        }
+                    })
+                    .then(() => res.status(200).json({ message: 'Commentaire supprimé !'}))
+                    .catch(error => res.status(400).json({ error }));
+                })
+            } else {
                 Comment.destroy({
                     where: {
                         id: req.params.id
@@ -50,7 +60,7 @@ exports.deleteComment = (req, res, next) => {
                 })
                 .then(() => res.status(200).json({ message: 'Commentaire supprimé !'}))
                 .catch(error => res.status(400).json({ error }));
-            })
+            }
         } else {
             res.status(403).json({ message: "Vous n'avez pas l'autorisation pour supprimer ce commentaire !" })
         }
