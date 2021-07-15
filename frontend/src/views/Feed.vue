@@ -71,6 +71,13 @@
   margin-right: 15%;
 }
 
+@media all and (min-width: 375px) and (max-width: 780px) {
+  
+  #feed_list {
+    margin-top: 30%;
+  }
+}
+
 </style>
 
 <script>

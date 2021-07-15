@@ -8,7 +8,7 @@
       </span>
       <span id="buttons" v-show="editButtons()">
         <b-button-group class="mx-1">
-        <b-button class="btn btn-warning" @click="$bvModal.show(post.id)">Modifier</b-button>
+        <b-button class="btn btn-warning" @click="$bvModal.show('editPost'+post.id)">Modifier</b-button>
           <EditPost
             v-bind:post="post"
           ></EditPost>
@@ -22,7 +22,7 @@
       <img v-show="showImage()" id="image" :src="post.imageUrl"/>
     </div>
     <div id="footer">
-      <b-link id="commentButton" variant="primary" @click="$bvModal.show('comment'+post.id)">Ajouter un commentaire</b-link>
+      <b-link id="commentButton" variant="primary" @click="$bvModal.show('addComment'+post.id)">Ajouter un commentaire</b-link>
          <CreateNewComment
           v-bind:post="post"
           ></CreateNewComment>
@@ -83,16 +83,30 @@
   font-size: 0.9em;
 }
 
-@media all and (min-width: 300px) and (max-width: 780px){
+@media all and (min-width: 375px) and (max-width: 780px){
 
     #header {
     flex-direction: column;
     align-items: flex-start;
   }
     #avatar {
-    margin-bottom: 3%;
+    margin-bottom: 10%;
+    width: 200px;
   }
-    #footer {
+    .card-title {
+    font-size: 1em;
+  }
+  .card-text {
+    font-size: 0.9em;
+  }
+  #datePost {
+    font-size: 0.7em;
+  }
+  #commentButton {
+    font-size: 0.9em;
+    margin-bottom: 5%;
+  }
+  #footer {
     flex-direction: column;
     align-items: flex-start;
   }

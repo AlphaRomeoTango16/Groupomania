@@ -1,5 +1,5 @@
 <template>
-  <b-modal :id="comment.id" hide-footer title="Modifier mon commentaire">
+  <b-modal :id="'editComment'+comment.id" hide-footer title="Modifier mon commentaire">
     <div class="d-block text-center">
       <b-form>
         <div>
@@ -25,7 +25,7 @@
     </div>
     <br>
     <div>
-      <b-button @click="$bvModal.hide('editComment')">Annuler</b-button>
+      <b-button @click="$bvModal.hide('editComment'+comment.id)">Annuler</b-button>
       <b-button class="ml-2" variant="primary" @click="modifyComment">Envoyer</b-button>
     </div>
   </b-modal>
@@ -54,6 +54,9 @@ export default {
     comment: {
       type: Object
     },
+    id: {
+      type: [String, Number]
+    }
   },
   methods: {
       modifyComment() {
@@ -67,7 +70,6 @@ export default {
         myHeaders.append("Authorization", bearerToken);
 
         const data = {
-          title: document.getElementById("title").value,
           content: document.getElementById("content").value
         }
 

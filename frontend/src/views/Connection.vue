@@ -26,7 +26,7 @@
         ></b-form-input>
       </b-form-group>
       <div class="d-flex justify-content-center">
-        <b-button type="submit" variant="primary">Connexion</b-button>
+        <b-button id="submit" type="submit" variant="primary">Connexion</b-button>
       </div>
     </b-form>
     <div>
@@ -45,6 +45,21 @@
     margin-right: auto;
     border-radius: 20px;
     border: 1px solid darkgray;
+}
+
+@media all and (min-width: 375px) and (max-width: 780px) {
+  .connection {
+    width: 300px;
+  }
+
+  h1 {
+    font-size: 1.7em;
+  }
+
+ #submit {
+   margin-bottom: 20px;
+  }
+
 }
 
 </style>

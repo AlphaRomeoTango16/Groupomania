@@ -1,5 +1,5 @@
 <template>
-  <b-modal :id="post.id" hide-footer title="Modifier mon post">
+  <b-modal :id="'editPost'+post.id" hide-footer title="Modifier mon post">
     <div class="d-block text-center">
       <b-form>
         <div>
@@ -35,7 +35,7 @@
     </div>
     <br>
     <div>
-      <b-button @click="$bvModal.hide('editPost')">Annuler</b-button>
+      <b-button @click="$bvModal.hide('editPost'+post.id)">Annuler</b-button>
       <b-button class="ml-2" variant="primary" @click="modifyPost">Envoyer</b-button>
     </div>
   </b-modal>

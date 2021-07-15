@@ -8,7 +8,7 @@
       </span>
       <span id="buttons" v-show="editButtons()">
         <b-button-group class="mx-1">
-        <b-button class="btn btn-warning" @click="$bvModal.show(comment.id)">Modifier</b-button>
+        <b-button class="btn btn-warning" @click="$bvModal.show('editComment'+comment.id)">Modifier</b-button>
           <EditComment
             v-bind:comment="comment"
           ></EditComment>
@@ -68,6 +68,28 @@
   justify-content: flex-end;
   font-size: 0.9em;
 }
+
+@media all and (min-width: 375px) and (max-width: 780px){
+
+    #header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+    #avatar {
+    margin-bottom: 10%;
+    width: 200px;
+  }
+    .card-title {
+    font-size: 1em;
+  }
+  .card-text {
+    font-size: 0.9em;
+  }
+  #footerComment {
+    font-size: 0.7em;
+  }
+}
+
 
 </style>
 

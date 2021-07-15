@@ -63,11 +63,11 @@
       </b-form-file>
       </b-form-group>
       <div class="d-flex justify-content-center">
-        <b-button type="submit" variant="primary">S'inscrire</b-button>
+        <b-button id="submit" type="submit" variant="primary">S'inscrire</b-button>
       </div>
     </b-form>
     <div>
-      <router-link :to="{ name: 'Home' }">Retourner à l'accueil</router-link>
+      <router-link id="link" :to="{ name: 'Home' }">Retourner à l'accueil</router-link>
     </div>
   </div>
 </template>
@@ -82,7 +82,22 @@
     margin-right: auto;
     border-radius: 20px;
     border: 1px solid darkgray;
-} 
+}
+
+@media all and (min-width: 375px) and (max-width: 780px) {
+  .register {
+    width: 300px;
+  }
+
+  h1 {
+    font-size: 1.7em;
+  }
+
+ #submit {
+   margin-bottom: 20px;
+  }
+
+}
 
 </style>
 

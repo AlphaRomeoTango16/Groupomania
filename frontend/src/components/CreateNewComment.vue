@@ -1,5 +1,5 @@
 <template>
-  <b-modal :id="'comment'+post.id" hide-footer title="Créer un commentaire">
+  <b-modal :id="'addComment'+post.id" hide-footer title="Créer un commentaire">
     <div class="d-block text-center">
       <b-form>
         <div>
@@ -25,7 +25,7 @@
     </div>
     <br>
     <div>
-      <b-button @click="$bvModal.hide('comment'+post.id)">Annuler</b-button>
+      <b-button @click="$bvModal.hide('addComment'+post.id)">Annuler</b-button>
       <b-button class="ml-2" variant="primary" @click="sendComment">Envoyer</b-button>
     </div>
   </b-modal>
