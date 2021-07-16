@@ -1,5 +1,4 @@
 <template>
-<html lang="fr">
 <div id="post">
   <b-card>
     <div id="header">
@@ -36,7 +35,6 @@
   v-bind:comment="comment"
   ></Comment>
 </div>
-</html>
 </template>
 
 <style lang="scss">

@@ -1,5 +1,4 @@
 <template>
-<html lang="fr">
   <b-modal :id="'editPost'+post.id" hide-footer title="Modifier mon post">
     <div class="d-block text-center">
       <b-form>
@@ -40,7 +39,6 @@
       <b-button class="ml-2" variant="primary" @click="modifyPost">Envoyer</b-button>
     </div>
   </b-modal>
-</html>
 </template>
 
 <style lang="scss">

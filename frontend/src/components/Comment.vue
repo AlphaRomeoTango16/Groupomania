@@ -1,5 +1,4 @@
 <template>
-<html lang="fr">
 <div id="comment">
   <b-card>
     <div id="header">
@@ -26,7 +25,6 @@
     </div>
   </b-card>
 </div>
-</html>
 </template>
 
 <style lang="scss">

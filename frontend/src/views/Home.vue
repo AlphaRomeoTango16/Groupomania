@@ -1,14 +1,11 @@
 <template>
-<html lang="fr">
   <div class="home">
     <img alt="Groupomania logo" src="../assets/logo.svg">
-    <h1>Accueil</h1>
     <span id="index">
-      <router-link to="/Connection" id="connection">Connexion</router-link> /
-      <router-link to="/Register" id="register">S'inscrire</router-link>
+      <router-link to="/Connection" class="font-weight-bold" id="connection">Connexion</router-link> /
+      <router-link to="/Register" class="font-weight-bold" id="register">S'inscrire</router-link>
     </span>
   </div>
-</html>
 </template>
 
 <style lang="scss">
@@ -23,10 +20,12 @@
 
 #connection {
   width: 100px;
+  color: rgb(2, 6, 226);
 }
 
 #register {
   width: 100px;
+  color: rgb(2, 6, 226);
 }
 
 

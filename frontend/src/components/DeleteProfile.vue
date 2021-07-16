@@ -1,5 +1,4 @@
 <template>
-<html lang="fr">
   <b-modal id="deleteProfile" hide-footer title="Supprimer mon profile">
     <p>Êtes-vous sûr de vouloir supprimer votre compte ?</p>
     <div>
@@ -7,7 +6,6 @@
       <b-button class="ml-2" variant="primary" @click="deleteProfile">Je suis sûr</b-button>
     </div>
   </b-modal>
-</html>
 </template>
 
 <style lang="scss">

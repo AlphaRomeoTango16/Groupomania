@@ -1,5 +1,4 @@
 <template>
-<html lang="fr">
  <div class="connection">
     <b-form @submit="onConnection" v-if="show">
       <h1>Se connecter</h1>
@@ -34,7 +33,6 @@
       <router-link :to="{ name: 'Home' }">Retourner à l'accueil</router-link>
     </div>
   </div>
-</html>
 </template>
 
 <style lang="scss">

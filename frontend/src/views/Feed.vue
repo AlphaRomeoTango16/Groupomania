@@ -1,6 +1,6 @@
 <template>
-<html lang="fr">
 <div id="feed_page">
+  <header>
   <div id="navbar">
     <b-navbar toggleable="md" type="dark" variant="dark" fixed="top">
       <b-navbar-brand to="/"><img id="logo" alt="Groupomania logo" src="../assets/white_logo.svg"></b-navbar-brand>
@@ -21,6 +21,8 @@
       </b-collapse>
     </b-navbar>
   </div>
+  </header>
+  <body>
   <div id="feed_list">
     <Post
     v-for="(post, pt) in posts"
@@ -30,8 +32,8 @@
     >
     </Post>
   </div>
+  </body>
 </div>
-</html>
 </template>
 
 <style lang="scss">
