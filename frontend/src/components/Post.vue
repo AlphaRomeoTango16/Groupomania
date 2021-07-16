@@ -7,7 +7,7 @@
         <p>{{ post.User.firstName }} {{ post.User.lastName }}</p>
       </span>
       <span id="buttons" v-show="editButtons()">
-        <b-button-group class="mx-1">
+        <b-button-group id="buttonsActions" size="sm" class="mx-1">
         <b-button class="btn btn-warning" @click="$bvModal.show('editPost'+post.id)">Modifier</b-button>
           <EditPost
             v-bind:post="post"
@@ -113,6 +113,17 @@
   #footer {
     flex-direction: column;
     align-items: flex-start;
+  }
+}
+
+@media all and (min-width: 600px) and (max-width: 800px) {
+  #header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  #avatar {
+    margin-bottom: 3%;
+    width: 200px;
   }
 }
 

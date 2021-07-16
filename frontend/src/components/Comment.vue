@@ -7,7 +7,7 @@
         <p>{{ comment.User.firstName }} {{ comment.User.lastName }}</p>
       </span>
       <span id="buttons" v-show="editButtons()">
-        <b-button-group class="mx-1">
+        <b-button-group size="sm" class="mx-1">
         <b-button class="btn btn-warning" @click="$bvModal.show('editComment'+comment.id)">Modifier</b-button>
           <EditComment
             v-bind:comment="comment"
