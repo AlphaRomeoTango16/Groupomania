@@ -1,4 +1,5 @@
 <template>
+<html lang="fr">
   <b-modal id="createPost" hide-footer title="Créer un post">
     <div class="d-block text-center">
       <b-form>
@@ -39,6 +40,7 @@
       <b-button class="ml-2" variant="primary" @click="sendPost">Envoyer</b-button>
     </div>
   </b-modal>
+</html>
 </template>
 
 <style lang="scss">

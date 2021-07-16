@@ -1,4 +1,5 @@
 <template>
+<html lang="fr">
   <b-modal :id="'editComment'+comment.id" hide-footer title="Modifier mon commentaire">
     <div class="d-block text-center">
       <b-form>
@@ -29,6 +30,7 @@
       <b-button class="ml-2" variant="primary" @click="modifyComment">Envoyer</b-button>
     </div>
   </b-modal>
+</html>
 </template>
 
 <style lang="scss">

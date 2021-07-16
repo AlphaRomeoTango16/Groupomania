@@ -1,9 +1,10 @@
 <template>
+<html lang="fr">
 <div id="comment">
   <b-card>
     <div id="header">
       <span id="avatar">
-        <b-avatar :src="comment.User.imageUrl"></b-avatar>
+        <b-avatar :src="comment.User.imageUrl" alt="avatar commentaire"></b-avatar>
         <p>{{ comment.User.firstName }} {{ comment.User.lastName }}</p>
       </span>
       <span id="buttons" v-show="editButtons()">
@@ -18,13 +19,14 @@
     </div>
     <div id="body">
       <b-card-text> {{ comment.content }} </b-card-text>
-      <img v-show="showImage()" id="image" :src="comment.imageUrl"/>
+      <img v-show="showImage()" id="image" alt="Image du commentaire"  :src="comment.imageUrl"/>
     </div>
     <div id="footerComment">
       <span>{{ formatedDate }}</span>
     </div>
   </b-card>
 </div>
+</html>
 </template>
 
 <style lang="scss">
@@ -69,7 +71,7 @@
   font-size: 0.9em;
 }
 
-@media all and (min-width: 375px) and (max-width: 780px){
+@media all and (min-width: 250px) and (max-width: 600px){
 
     #header {
     flex-direction: column;

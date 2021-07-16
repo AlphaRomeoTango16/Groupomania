@@ -1,4 +1,5 @@
 <template>
+<html lang="fr">
 <div id="feed_page">
   <div id="navbar">
     <b-navbar toggleable="md" type="dark" variant="dark" fixed="top">
@@ -8,10 +9,7 @@
         <b-navbar-nav class="ml-auto">
           <b-nav-item-dropdown right>
           <template #button-content id="profile">
-            <span id="avatarNav">
-              <b-avatar :src="user.imageUrl"></b-avatar>
-              <p>{{ user.firstName }} {{ user.lastName }}</p>
-            </span>
+            <em>{{ user.firstName }} {{ user.lastName }}</em>
           </template>
           <b-dropdown-item @click="$bvModal.show('createPost')">Créer un post</b-dropdown-item>
             <CreateNewPost></CreateNewPost>
@@ -33,6 +31,7 @@
     </Post>
   </div>
 </div>
+</html>
 </template>
 
 <style lang="scss">
@@ -71,10 +70,17 @@
   margin-right: 15%;
 }
 
-@media all and (min-width: 375px) and (max-width: 780px) {
+@media all and (min-width: 250px) and (max-width: 600px) {
   
   #feed_list {
     margin-top: 30%;
+  }
+}
+
+@media all and (min-width: 600px) and (max-width: 2500px) {
+  
+  #feed_list {
+    margin-top: 10%;
   }
 }
 

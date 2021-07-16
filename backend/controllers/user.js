@@ -44,9 +44,10 @@ exports.login = (req, res, next) => {
                         firstName: user.firstName,
                         lastName: user.lastName,
                         image: user.imageUrl,
+                        email: user.emailAddress,
                         token: jwt.sign(
                             { userId: user.id, userAdmin: user.admin },
-                            'RANDOM ACCESS TOKEN',
+                            '736A5F1D28A1DB19CB83E80DA8ABF10B0AAB02297B771F82F64C9909DBD170C1',
                             { expiresIn: '24h' }
                         )
                     });

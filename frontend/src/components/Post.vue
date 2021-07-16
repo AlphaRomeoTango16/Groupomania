@@ -1,4 +1,5 @@
 <template>
+<html lang="fr">
 <div id="post">
   <b-card>
     <div id="header">
@@ -19,7 +20,7 @@
     <div id="body">
       <b-card-title>{{ post.title }}</b-card-title>
       <b-card-text>{{ post.content }}</b-card-text>
-      <img v-show="showImage()" id="image" :src="post.imageUrl"/>
+      <img v-show="showImage()" id="image" alt="Image du post" :src="post.imageUrl"/>
     </div>
     <div id="footer">
       <b-link id="commentButton" variant="primary" @click="$bvModal.show('addComment'+post.id)">Ajouter un commentaire</b-link>
@@ -35,6 +36,7 @@
   v-bind:comment="comment"
   ></Comment>
 </div>
+</html>
 </template>
 
 <style lang="scss">
@@ -73,6 +75,10 @@
   object-fit: scale-down;
 }
 
+#commentButton {
+  color: rgb(2, 6, 226);
+}
+
 #footer {
   margin-top: 3%;
   display: flex;
@@ -83,7 +89,7 @@
   font-size: 0.9em;
 }
 
-@media all and (min-width: 375px) and (max-width: 780px){
+@media all and (min-width: 250px) and (max-width: 600px){
 
     #header {
     flex-direction: column;
