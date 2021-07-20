@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
+/* Routes de l'ensemble des views */
+
 const routes = [
   {
     path: '/',

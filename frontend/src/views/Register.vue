@@ -119,6 +119,7 @@ export default {
     }
   },
   methods: {
+    /* Fonction pour envoyer les informations du formulaire d'inscription à l'API */
     onSubmit(event) {
       event.preventDefault()
 

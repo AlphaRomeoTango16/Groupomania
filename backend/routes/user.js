@@ -5,6 +5,7 @@ const userCtrl = require('../controllers/user');
 const auth = require('../middleware/auth');
 const multer = require('../middleware/multer_config');
 
+/* Routes pour les fonctions utilisateurs */
 router.post('/signup', multer, userCtrl.signup);
 router.post('/login', userCtrl.login);
 router.get('/:id', userCtrl.getOneUser);

@@ -26,6 +26,13 @@ exports.createComment = (req, res, next) => {
         );
 }
 
+/**
+ * Modifier un commentaire dans la base de donnée
+ * @param {Request} req la requête http qui a été reçu par le serveur
+ * @param {Result} res la réponse à la requête
+ * @param {function} next fonction suivante
+ */
+
 exports.modifyComment = (req, res, next) => {
     Comment.findByPk(req.params.id)
     .then(comment => {
@@ -43,6 +50,13 @@ exports.modifyComment = (req, res, next) => {
     })
     .catch(error => res.status(404).json({ error }));
 }
+
+/**
+ * Supprimer un commentaire dans la base de donnée
+ * @param {Request} req la requête http qui a été reçu par le serveur
+ * @param {Result} res la réponse à la requête
+ * @param {function} next fonction suivante
+ */
 
 exports.deleteComment = (req, res, next) => {
     Comment.findByPk(req.params.id)

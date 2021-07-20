@@ -68,6 +68,7 @@ export default {
     },
   },
   methods: {
+      /* Fonction pour envoyer le formulaire de modification de post à l'API */
       modifyPost() {
 
         let user = JSON.parse(localStorage.getItem("user"));

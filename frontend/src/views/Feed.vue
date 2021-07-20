@@ -122,6 +122,7 @@ export default {
       this.loadPosts();
   },
   methods: {
+    /* Fonction afin d'afficher les informations relatives à l'utilisateur connecté */
     loadUser() {
       let user = JSON.parse(localStorage.getItem("user"));
       let token = user.token;
@@ -144,6 +145,7 @@ export default {
         .then(result => console.log(this.user = result))
         .catch(error => console.log('error', error));
     },
+    /* Fonction pour afficher l'ensemble des posts et commentaires */
     loadPosts() {
       var requestOptions = {
         method: 'GET',
@@ -155,14 +157,12 @@ export default {
         .then(result => {this.posts = result})
         .catch(error => console.log('error', error));
     },
+    /* Fonction pour envoyer sur le formulaire de création de post */
     createPost(event) {
       event.preventDefault()
       this.$router.push('/createPost');
     },
-    editProfile(event) {
-      event.preventDefault()
-      this.$router.push('/editProfile');
-    },
+    /* Fonction pour déconnecter l'utilisateur de l'application */
     logout(event) {
       event.preventDefault()
       localStorage.clear()

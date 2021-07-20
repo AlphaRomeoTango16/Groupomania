@@ -67,6 +67,7 @@ export default {
     },
   },
   methods: {
+      /* Fonction pour envoyer le formulaire de création de post à l'API */
       sendPost() {
 
         let user = JSON.parse(localStorage.getItem("user"));

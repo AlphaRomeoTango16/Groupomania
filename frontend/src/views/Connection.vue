@@ -76,6 +76,7 @@ export default {
       }
     },
     methods: {
+      /* Fonction pour envoyer le formulaire de connection à l'API */
       onConnection(event) {
         event.preventDefault()
 

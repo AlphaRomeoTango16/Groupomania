@@ -2,6 +2,8 @@ const Post = require('./Post');
 const User = require('./User');
 const Comment = require('./Comment');
 
+/* Index pour les associtaions Sequelize */
+
 const load = async () => {
     Post.belongsTo(User, {onDelete:"cascade"});
     Post.hasMany(Comment);

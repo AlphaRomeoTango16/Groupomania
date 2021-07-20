@@ -1,5 +1,12 @@
 const jwt = require('jsonwebtoken');
 
+/**
+ * Fonction permettant d'authentifier l'utilisateur via JsonWebToken
+ * @param {Request} req la requête http qui a été reçu par le serveur
+ * @param {Result} res la réponse à la requête
+ * @param {function} next fonction suivante
+ */
+
 module.exports = (req, res, next) => {
     try {
         const token = req.headers.authorization.split(' ')[1];

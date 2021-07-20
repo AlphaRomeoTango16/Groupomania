@@ -15,8 +15,10 @@ load();
 
 const app = express();
 
+/* Protection de l'app Express via helmet */
 app.use(helmet());
 
+/* Mise en place des Headers */
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');

@@ -111,6 +111,7 @@ export default {
       }
   },
   computed: {
+    /* Fonction pour indiquer soit la date de création, soit la date de modification ainsi que sa mise en forme au format FR */
     formatedDate: function() {
           const createdDate = this.comment.createdAt;
           const dateC = new Date(createdDate);
@@ -133,13 +134,18 @@ export default {
     this.showImage()
   },
   methods: {
+    /* Fonction pour afficher les boutons "modifier" et "supprimer" en fonction de l'utilisateur */
     editButtons() {
       let user = JSON.parse(localStorage.getItem("user"));
       return user.userId == this.comment.UserId || user.admin;
     },
+
+    /* Fonction pour ne pas afficher d'img si il n'y a pas d'image associé au post */
     showImage() {
       return this.comment.imageUrl != undefined;
     },
+    
+    /* Fonction pour supprimer un post */
     deleteComment() {
 
       let user = JSON.parse(localStorage.getItem("user"));

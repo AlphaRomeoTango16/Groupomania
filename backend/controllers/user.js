@@ -3,6 +3,13 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 
+/**
+ * Créer un utilisateur dans la base de donnée
+ * @param {Request} req la requête http qui a été reçu par le serveur
+ * @param {Result} res la réponse à la requête
+ * @param {function} next fonction suivante
+ */
+
 exports.signup = (req, res, next) => {
     let strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
     const userObject = JSON.parse(req.body.user);
@@ -26,6 +33,13 @@ exports.signup = (req, res, next) => {
         res.send('Votre mot de passe doit contenir = une majuscule, une minuscule, un chiffre et un caractère spécial !');
     }
 };
+
+/**
+ * Connecter l'utilisateur à la base de donnée
+ * @param {Request} req la requête http qui a été reçu par le serveur
+ * @param {Result} res la réponse à la requête
+ * @param {function} next fonction suivante
+ */
 
 exports.login = (req, res, next) => {
     User.findOne({ where : { emailAddress: req.body.emailAddress } })
@@ -57,6 +71,13 @@ exports.login = (req, res, next) => {
         .catch(error => res.status(500).json({ error }));
 };
 
+/**
+ * Afficher les informations relative à l'utilisateur indiqué à la base de donnée
+ * @param {Request} req la requête http qui a été reçu par le serveur
+ * @param {Result} res la réponse à la requête
+ * @param {function} next fonction suivante
+ */
+
 exports.getOneUser = (req, res, next) => {
     User.findByPk(req.params.id)
     .then(user => res.status(200).json(user))
@@ -80,6 +101,13 @@ exports.modifyUser = (req, res, next) => {
     })
     .catch(error => res.status(404).json({ error }));
 }
+
+/**
+ * Supprimer l'utilisateur de la base de donnée
+ * @param {Request} req la requête http qui a été reçu par le serveur
+ * @param {Result} res la réponse à la requête
+ * @param {function} next fonction suivante
+ */
 
 exports.deleteUser = (req, res, next) => {
     User.findOne({ where : { emailAddress: req.body.emailAddress } })

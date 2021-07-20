@@ -1,6 +1,8 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const database = require('../database/connection');
 
+/* Modèle pour les utilisateurs */
+
 module.exports = database.define("User", {
     firstName: {
         type: DataTypes.STRING(20),

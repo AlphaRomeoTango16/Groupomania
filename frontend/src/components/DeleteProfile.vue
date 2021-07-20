@@ -27,6 +27,7 @@ export default {
   props: {
   },
   methods: {
+      /* Fonction pour supprimer l'utilisateur */
       deleteProfile() {
 
         let user = JSON.parse(localStorage.getItem("user"));

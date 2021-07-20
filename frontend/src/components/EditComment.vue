@@ -59,6 +59,7 @@ export default {
     }
   },
   methods: {
+      /* Fonction pour envoyer le formulaire de modification de commentaire à l'API */
       modifyComment() {
 
         let user = JSON.parse(localStorage.getItem("user"));

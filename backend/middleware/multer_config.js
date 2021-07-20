@@ -1,5 +1,7 @@
 const multer = require('multer');
 
+/* Configuration de multer afin d'uploader des images dans la base de donnée */
+
 const MIME_TYPES = {
     'image/jpg': 'jpg',
     'image/jpeg': 'jpg',
