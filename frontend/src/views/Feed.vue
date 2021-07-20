@@ -109,7 +109,7 @@ export default {
     },
     imageUrl: {
       type: String
-    },
+    }
   },
   data() {
     return {
