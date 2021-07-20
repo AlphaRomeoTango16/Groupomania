@@ -3,10 +3,10 @@ const User = require('./User');
 const Comment = require('./Comment');
 
 const load = async () => {
-    Post.belongsTo(User);
+    Post.belongsTo(User, {onDelete:"cascade"});
     Post.hasMany(Comment);
-    Comment.belongsTo(User);
-    Comment.belongsTo(Post);
+    Comment.belongsTo(User, {onDelete:"cascade"});
+    Comment.belongsTo(Post, {onDelete:"cascade"});
 
     await Post.sync({alter:true});
     await User.sync({alter:true});

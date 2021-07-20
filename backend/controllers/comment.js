@@ -1,6 +1,13 @@
 const { Post, User, Comment } = require('../models/Index');
 const fs = require('fs');
 
+/**
+ * Créer un commentaire dans la base de donnée
+ * @param {Request} req la requête http qui a été reçu par le serveur
+ * @param {Result} res la réponse à la requête
+ * @param {function} next fonction suivante
+ */
+
 exports.createComment = (req, res, next) => {
     Post.findByPk(req.params.id)
     .then(post => {

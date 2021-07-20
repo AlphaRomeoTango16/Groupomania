@@ -121,7 +121,7 @@ export default {
           const dateU = new Date(updatedDate);
           const fUpdateddDate = dateU.toLocaleDateString("fr-FR", options);
 
-          if (fUpdateddDate  > fCreatedDate) {
+          if (updatedDate  > createdDate) {
             return "Mis à jour le" + ' ' + fUpdateddDate;
           } else {
             return "Publié le" + ' ' + fCreatedDate;
