@@ -59,3 +59,18 @@ Open another terminal, change the directory to frontend and launch the app with 
 $ cd frontend
 $ npm run serve
 ```
+---
+### 6/ UPDATE AN ACCOUNT TO AN ADMIN ACCOUNT
+To update an admin account you can do it with the following process.
+
+Launch the MySQL shell and connect to the database by entering:
+```
+$ mysql -u username -p groupomania
+```
+
+Update the existing account with the admin setting and the following command:
+```
+$ UPDATE Users
+-> SET admin = "1"
+-> WHERE emailAddress = "user_emailAddress"
+```
