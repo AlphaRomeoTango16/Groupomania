@@ -12,7 +12,7 @@ Install the database with MySQL.
 
 Launch the MySQL shell by entering:
 ```
-$ mysql -u username -p
+$ mysql -u root -p
 ```
 *Enter the root password when prompted. The command prompt should change to show that you’re working in MySQL.*
 
@@ -23,13 +23,13 @@ $ CREATE DATABASE groupomania;
 
 Exit the MySQL shell and enter the following command to import the dump file:
 ```
-$ mysql -u username -p groupomania < GroupomaniaDB.sql
+$ mysql -u root -p groupomania < GroupomaniaDB.sql
 ```
 *You’ll only see a response if there are errors. A successful import won’t display any comments on the screen.*
 
 To check the database, log back into the MySQL shell:
 ```
-$ mysql –u username –p
+$ mysql –u root –p
 ```
 
 To load the database, enter:
@@ -38,7 +38,7 @@ $ USE groupomania
 ```
 ---
 ### 3/ INSTALL THE DATABASE
-Configure the .env file in the backend folder with your settings (it must remain in the backend folder).
+Create a .env file in the backend folder with your settings (it must remain in the backend folder).
 ```
 DB_USER="your user name"
 DB_PASS="your password"
@@ -46,17 +46,19 @@ DB_HOST=localhost
 DB_DATABASE=groupomania
 ```
 ---
-### 4/ LAUNCH THE SERVER
-Change the directory to backend and launch the server with nodeJS.
+### 4/ INSTALL THE BACKEND DEPENDENCIES AND LAUNCH THE SERVER
+Change the directory to backend, install the backend dependencies and launch the server with nodeJS.
 ```
 $ cd backend
+$ npm install
 $ node server
 ```
 ---
-### 5/ LAUNCH THE APP
-Open another terminal, change the directory to frontend and launch the app with Vue CLI.
+### 5/ INSTALL THE FRONTEND DEPENDENCIES AND LAUNCH THE APP
+Open another terminal, change the directory to frontend, install the frontend dependencies and launch the app with Vue CLI.
 ```
 $ cd frontend
+$ npm install
 $ npm run serve
 ```
 ---
